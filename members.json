@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Kenny Shults",
+    "nickname": "The Enforcer",
+    "year": 1992,
+    "photo": "img/ken-shults.jpg",
+    "video": "https://worldfootbag.com/product/tt1-tricks-of-the-trade-dvd-for-hacky-sack-footbag/"
+  },
+  {
+    "name": "Rick Reese",
+    "nickname": "Rippin'",
+    "year": 1992,
+    "photo": "img/richard-reese.jpg",
+    "video": "https://vimeo.com/472505541"
+  },
+  {
+    "name": "Peter Irish",
+    "nickname": "The Executioner",
+    "year": 1992,
+    "photo": "img/peter-irish.jpg",
+    "video": "https://www.youtube.com/watch?v=CnqES24g2tE"
+  },
+  {
+    "name": "Dimitri Kavouras",
+    "nickname": "celsone",
+    "year": 1992,
+    "photo": "img/profile.jpg",
+    "video": null
+  },
+  {
+    "name": "Dennis Jones",
+    "nickname": "D-Money",
+    "year": 1992,
+    "photo": "img/dennis-jones.jpg",
+    "video": null
+  },
+  {
+    "name": "Tim Kelley",
+    "nickname": "Stikman",
+    "year": 1992,
+    "photo": "img/tim-kelly.jpg",
+    "video": null
+  },
+  {
+    "name": "Joey Schaeffer",
+    "nickname": "Za Za",
+    "year": 1992,
+    "photo": "img/joseph-shaeffer.jpg",
+    "video": null
+  },
+  {
+    "name": "Tuan Vu",
+    "nickname": "Disco Ninja",
+    "year": 1995,
+    "photo": "img/tuan-vu.jpg",
+    "video": null
+  },
+  {
+    "name": "Eric Wulff",
+    "nickname": "Iron Man",
+    "year": 1995,
+    "photo": "img/eric-wulff.jpg",
+    "video": null
+  },
+  {
+    "name": "Scott Davidson",
+    "nickname": "Enlightener",
+    "year": 1995,
+    "photo": "img/scott-davidson.jpg",
+    "video": "https://www.earlyworkingretirement.com"
+  },
+  {
+    "name": "Greg Nelson",
+    "nickname": "GF Smoothie",
+    "year": 1995,
+    "photo": "img/greg-nelson.jpg",
+    "video": null
+  },
+  {
+    "name": "Steve Kremer",
+    "nickname": "Kosmo",
+    "year": 1995,
+    "photo": "img/steve-kremer.jpg",
+    "video": null
+  },
+  {
+    "name": "Josh Casey",
+    "nickname": "Chiseler",
+    "year": 1995,
+    "photo": "img/josh-casey.jpg",
+    "video": null
+  },
+  {
+    "name": "Paul Munger",
+    "nickname": "Hu-Mongous",
+    "year": 1995,
+    "photo": "img/paul-munger.jpg",
+    "video": "https://www.youtube.com/watch?v=ph05nH1UVec&list=PL8F34D3D9C68F3089"
+  },
+  {
+    "name": "Daryl Genz",
+    "nickname": "Genzu Blades",
+    "year": 1996,
+    "photo": "img/daryl-genz.jpg",
+    "video": "https://vimeo.com/198106959"
+  },
+  {
+    "name": "Ahren Gehrman",
+    "nickname": "Torch",
+    "year": 1996,
+    "photo": "img/ahren-gehrman.jpg",
+    "video": "http://www.footbag.org/gallery2/showset/21"
+  },
+  {
+    "name": "Ryan Mulroney",
+    "nickname": "Regulator",
+    "year": 1997,
+    "photo": "img/ryan-mulroney.jpg",
+    "video": "https://www.youtube.com/watch?v=Hgb_JeC_bxw"
+  },
+  {
+    "name": "Red Husted",
+    "nickname": "Shred",
+    "year": 1997,
+    "photo": "img/red-husted.jpg",
+    "video": "https://redhusted.com/2022/10/28/the-time-i-was-a-footbag-player/"
+  },
+  {
+    "name": "Tu Vu",
+    "nickname": "huge",
+    "year": 1997,
+    "photo": "img/tu-vu.jpg",
+    "video": "https://www.youtube.com/watch?v=U_yKAXALgVw"
+  },
+  {
+    "name": "Chad Devlahovich",
+    "nickname": "Big Add",
+    "year": 1997,
+    "photo": "img/chad-devlahovich.jpg",
+    "video": "https://www.youtube.com/watch?v=Ej8sEVFD1og"
+  },
+  {
+    "name": "Noah Dubreuil",
+    "nickname": "Merlin",
+    "year": 1997,
+    "photo": "img/profile.jpg",
+    "video": "https://www.youtube.com/watch?v=CNpOh_KJJe4"
+  },
+  {
+    "name": "Dave Holton",
+    "nickname": "Highlander",
+    "year": 1997,
+    "photo": "img/dave-holton.jpg",
+    "video": "https://www.youtube.com/watch?v=C9ibkp0jx0U"
+  },
+  {
+    "name": "Brian McKenzie",
+    "nickname": "Kamakenzie",
+    "year": 1998,
+    "photo": "img/brian-mckenzie.jpg",
+    "video": "https://www.youtube.com/watch?v=rFxxDBTSsm8"
+  },
+  {
+    "name": "Eric Windsor",
+    "nickname": "Wicked",
+    "year": 1998,
+    "photo": "img/eric-windsor.jpg",
+    "video": "https://www.youtube.com/watch?v=mh8ASGrAfC0"
+  },
+  {
+    "name": "Carol Wedemeyer",
+    "nickname": "She blade",
+    "year": 1998,
+    "photo": "img/carol-wedemeyer.jpg",
+    "video": "https://www.youtube.com/watch?v=NxLcAq6xEz0"
+  },
+  {
+    "name": "Eli Piltz",
+    "nickname": "Intergalactic",
+    "year": 1998,
+    "photo": "img/eliot-piltz.jpg",
+    "video": "https://www.youtube.com/watch?v=n1gQVHCa954"
+  },
+  {
+    "name": "Kyle Crawford",
+    "nickname": "Kung Fu",
+    "year": 1998,
+    "photo": "img/kyle-crawford.jpg",
+    "video": null
+  },
+  {
+    "name": "Sunil Jani",
+    "nickname": "Tsunami",
+    "year": 1999,
+    "photo": "img/sunil-jani.jpg",
+    "video": "https://www.youtube.com/watch?v=Uj3HIWrR4ww"
+  },
+  {
+    "name": "Mika Koistinen",
+    "nickname": "Iceman",
+    "year": 1999,
+    "photo": "img/profile.jpg",
+    "video": "https://www.youtube.com/watch?v=wlfrnErbaGI"
+  },
+  {
+    "name": "Toby Robinson",
+    "nickname": "One",
+    "year": 2000,
+    "photo": "img/toby-robinson.jpg",
+    "video": null
+  },
+  {
+    "name": "Jonathan Schneider",
+    "nickname": "Outsider",
+    "year": 2000,
+    "photo": "img/jon-schneider.jpg",
+    "video": null
+  },
+  {
+    "name": "Lon Smith",
+    "nickname": "Shred On",
+    "year": 2000,
+    "photo": "img/lon-smith.jpg",
+    "video": "https://www.youtube.com/watch?v=SSbBvKaM6sk"
+  },
+  {
+    "name": "Allan Haggett",
+    "nickname": "Allan",
+    "year": 2001,
+    "photo": "img/allan-haggett-2017.jpg",
+    "video": "https://vimeo.com/158856059"
+  },
+  {
+    "name": "Yacine Merzouk",
+    "nickname": "Fiend",
+    "year": 2001,
+    "photo": "img/yacine_merzouk.jpg",
+    "video": "https://www.youtube.com/watch?v=zm_-A_q6Gmk"
+  },
+  {
+    "name": "Richie Abshire",
+    "nickname": "renegade",
+    "year": 2001,
+    "photo": "img/richard-abshire.jpg",
+    "video": "https://www.youtube.com/watch?v=DkvUDRpWhYw"
+  },
+  {
+    "name": "Sebastien Duschesne",
+    "nickname": "Hurricane",
+    "year": 2001,
+    "photo": "img/sebastien_duschesne.jpg",
+    "video": "https://www.youtube.com/watch?v=DpJsfRJFnhQ"
+  },
+  {
+    "name": "Gordon Scott Bevier",
+    "nickname": "Flash",
+    "year": 2001,
+    "photo": "img/gordon_bevier.jpg",
+    "video": "https://www.youtube.com/watch?v=eTG_o-R08sI"
+  },
+  {
+    "name": "Honza Weber",
+    "nickname": "Webslinger",
+    "year": 2002,
+    "photo": "img/honza_weber.jpg",
+    "video": "https://www.youtube.com/watch?v=20lOET6K5dE"
+  },
+  {
+    "name": "Ales Zelinka",
+    "nickname": "The Man of Steel",
+    "year": 2002,
+    "photo": "img/ales_zelinka.jpg",
+    "video": "https://www.youtube.com/watch?v=I0RwwiMkPxE"
+  },
+  {
+    "name": "Jim Penske",
+    "nickname": "Pimpske",
+    "year": 2002,
+    "photo": "img/jim_penske.jpg",
+    "video": "https://www.youtube.com/watch?v=lr46ug-5WS8"
+  },
+  {
+    "name": "Bryan Fournier",
+    "nickname": "Blackjack",
+    "year": 2002,
+    "photo": "img/bryan-fournier.jpg",
+    "video": null
+  },
+  {
+    "name": "Vaclav (Vasek) Klouda",
+    "nickname": "Super Glue",
+    "year": 2002,
+    "photo": "img/vasek_klouda.jpg",
+    "video": "https://myspace.com/footbagnic/video/vasek-klouda-king-of-footbag/3136878"
+  },
+  {
+    "name": "Jere Vainikka",
+    "nickname": "Smooth Criminal",
+    "year": 2003,
+    "photo": "img/jere_vainikka.jpg"
+  },
+  {
+    "name": "Yves Kreil",
+    "nickname": "Krusher",
+    "year": 2003,
+    "photo": "img/yves_kreil.jpg"
+  },
+  {
+    "name": "Felix Zenger",
+    "nickname": "Stone Cold",
+    "year": 2003,
+    "photo": "img/felix_zenger.jpg"
+  },
+  {
+    "name": "Tuukka Antikainen",
+    "nickname": "TKO",
+    "year": 2003,
+    "photo": "img/tuukka-antikainen.jpg"
+  },
+  {
+    "name": "Dylan Fry",
+    "nickname": "Stylon Dylon",
+    "year": 2004,
+    "photo": "img/dylan_fry.jpg"
+  },
+  {
+    "name": "Nick Laroche",
+    "nickname": "Slick Nick",
+    "year": 2004,
+    "photo": "img/nick_laroche.jpg"
+  },
+  {
+    "name": "Johnny Murphy",
+    "nickname": "Magic Feet (J$)",
+    "year": 2004,
+    "photo": "img/johnny-murphy.jpg"
+  },
+  {
+    "name": "Jorden Moir",
+    "nickname": "The Destroyer",
+    "year": 2004,
+    "photo": "img/jorden_moir.jpg"
+  },
+  {
+    "name": "Lasse Salmenhaara",
+    "nickname": null,
+    "year": 2004,
+    "photo": "img/lasse-salmenhaara.jpg"
+  },
+  {
+    "name": "Jere Linnanen",
+    "nickname": "Scary",
+    "year": 2004,
+    "photo": "img/jere_linnanen.jpg"
+  },
+  {
+    "name": "Toni Paakkonen",
+    "nickname": "the beast",
+    "year": 2004,
+    "photo": "img/toni-paakkonen.jpg"
+  },
+  {
+    "name": "Juho Marjo",
+    "nickname": "Super",
+    "year": 2005,
+    "photo": "img/juho_marjo.jpg"
+  },
+  {
+    "name": "Mikko Lepisto",
+    "nickname": "Uniqueo",
+    "year": 2005,
+    "photo": "img/mikko_lepisto.jpg"
+  },
+  {
+    "name": "Karim Daouk",
+    "nickname": "Special K",
+    "year": 2005,
+    "photo": "img/karim_daouk.jpg"
+  },
+  {
+    "name": "Phillip Morrison",
+    "nickname": "Red Rocket",
+    "year": 2006,
+    "photo": "img/phil_morrison.jpg"
+  },
+  {
+    "name": "Aleksi Airinen",
+    "nickname": "Air",
+    "year": 2006,
+    "photo": "img/aleksi_airinen.jpg"
+  },
+  {
+    "name": "Tina Aberli",
+    "nickname": "Swiss Miss",
+    "year": 2006,
+    "photo": "img/tina_aeberli.jpg"
+  },
+  {
+    "name": "Damian Gielnicki",
+    "nickname": "Twister",
+    "year": 2007,
+    "photo": "img/damian_gielnicki.jpg"
+  },
+  {
+    "name": "Sergey Kozlov",
+    "nickname": "Kalashnikov",
+    "year": 2007,
+    "photo": "img/sergey_kozlov.jpg"
+  },
+  {
+    "name": "Serge Kaldany",
+    "nickname": "Cerberus",
+    "year": 2007,
+    "photo": "img/serge_kaldany.jpg"
+  },
+  {
+    "name": "David Clavens",
+    "nickname": "Cleaver",
+    "year": 2007,
+    "photo": "img/david_clavens.jpg"
+  },
+  {
+    "name": "Arek Dzudzinski",
+    "nickname": "Hi-Tek",
+    "year": 2008,
+    "photo": "img/profile.jpg"
+  },
+  {
+    "name": "Nick Landes",
+    "nickname": "The Praying Mantis",
+    "year": 2009,
+    "photo": "img/nick_landes.jpg"
+  },
+  {
+    "name": "Anssi Sundberg",
+    "nickname": "Accelerator",
+    "year": 2009,
+    "photo": "img/anssi_sundberg.jpg"
+  },
+  {
+    "name": "Milan Benda",
+    "nickname": "Megatron",
+    "year": 2009,
+    "photo": "img/milan_benda.jpg"
+  },
+  {
+    "name": "Evan Gatesman",
+    "nickname": "Silencer",
+    "year": 2010,
+    "photo": "img/evan_gatesman.png"
+  },
+  {
+    "name": "Olav Piwowar",
+    "nickname": "Anaconda",
+    "year": 2011,
+    "photo": "img/olav_piwowar.jpg"
+  },
+  {
+    "name": "Jay Boychuk",
+    "nickname": "(the) Creator",
+    "year": 2011,
+    "photo": "img/jay_boychuk.jpg"
+  },
+  {
+    "name": "Marcin Bujko",
+    "nickname": "Stylish",
+    "year": 2012,
+    "photo": "img/marcin_bujko.jpg"
+  },
+  {
+    "name": "Lauri Airinen",
+    "nickname": "Madness",
+    "year": 2012,
+    "photo": "img/lauri_airinen.jpg"
+  },
+  {
+    "name": "Jindra Smola",
+    "nickname": "FootZepp",
+    "year": 2013,
+    "photo": "img/jindra_smola.jpg"
+  },
+  {
+    "name": "Rene Ruhr",
+    "nickname": "Collider",
+    "year": 2013,
+    "photo": "img/rene_ruhr.jpg"
+  },
+  {
+    "name": "Johnny Suderman",
+    "nickname": "The Canadian Hero",
+    "year": 2013,
+    "photo": "img/johnnysuderman.jpg"
+  },
+  {
+    "name": "Mathias Blau",
+    "nickname": "The Matrix",
+    "year": 2014,
+    "photo": "img/mathias-blau.jpg"
+  },
+  {
+    "name": "Nick Polini",
+    "nickname": "HOUDINI",
+    "year": 2017,
+    "photo": "img/nick-houdini-polini.jpg"
+  },
+  {
+    "name": "Dominik Šimků",
+    "nickname": "NUNCHAKU",
+    "year": 2018,
+    "photo": "img/13439228_1090331857677433_4827374749964852323_n.jpg"
+  },
+  {
+    "name": "Taishi Ishida",
+    "nickname": "SHURIKEN",
+    "year": 2018,
+    "photo": "img/37241395_10156116269430971_8424582865114628096_n.jpg"
+  },
+  {
+    "name": "Rafał Kaleta",
+    "nickname": "KILLA",
+    "year": 2020,
+    "photo": "img/rafal-kaleta.jpg"
+  },
+  {
+    "name": "Christopher Schillem",
+    "nickname": "The Machine",
+    "year": 2021,
+    "photo": "img/christopher-schillem.jpg"
+  },
+  {
+    "name": "Pawel Nowak",
+    "nickname": "Dynomite",
+    "year": 2021,
+    "photo": "img/pawel-nowak.jpg"
+  },
+  {
+    "name": "Dante Diotallevi",
+    "nickname": "The Inferno",
+    "year": 2024,
+    "photo": "img/dante-diotallevi.jpg"
+  }
+]
