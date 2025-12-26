@@ -538,5 +538,11 @@
     "nickname": "The Inferno",
     "year": 2024,
     "photo": "img/dante-diotallevi.jpg"
+  },
+  {
+    "name": "Jakub Mościszewski",
+    "nickname": "Endurance",
+    "year": 2025,
+    "photo": "img/jakub_mościszewski.jpg"
   }
 ]
