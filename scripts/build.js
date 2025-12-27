@@ -590,8 +590,6 @@ ${yearSections}
 <script>
 (function() {
   // Scrollspy for timeline navigation
-  const sections = document.querySelectorAll('.year-section');
-  const yearLinks = document.querySelectorAll('.year-link');
   const nav = document.getElementById('timeline-nav');
   const navInner = nav.querySelector('.timeline-nav-inner');
   let isSearching = false;
@@ -599,13 +597,15 @@ ${yearSections}
   function updateActiveYear() {
     // Disable scrollspy highlighting when searching
     if (isSearching) {
-      yearLinks.forEach(link => link.classList.remove('active'));
+      document.querySelectorAll('.year-link').forEach(link => link.classList.remove('active'));
       return;
     }
 
     const navHeight = nav.offsetHeight + 20;
     let current = '';
 
+    // Get sections in current DOM order
+    const sections = document.querySelectorAll('.year-section');
     sections.forEach(section => {
       const rect = section.getBoundingClientRect();
       if (rect.top <= navHeight + 100) {
@@ -613,6 +613,7 @@ ${yearSections}
       }
     });
 
+    const yearLinks = document.querySelectorAll('.year-link');
     yearLinks.forEach(link => {
       link.classList.remove('active');
       if (link.getAttribute('href') === '#' + current) {
@@ -635,10 +636,11 @@ ${yearSections}
   // Search functionality - reads from DOM, no JSON needed
   const searchBox = document.getElementById('search');
   const searchInfo = document.getElementById('search-info');
-  const cards = document.querySelectorAll('.member-card');
 
   searchBox.addEventListener('input', function(e) {
     const query = e.target.value.toLowerCase().trim();
+    const cards = document.querySelectorAll('.member-card');
+    const sections = document.querySelectorAll('.year-section');
     let visibleCount = 0;
 
     if (!query) {
@@ -651,7 +653,7 @@ ${yearSections}
     }
 
     isSearching = true;
-    yearLinks.forEach(link => link.classList.remove('active'));
+    document.querySelectorAll('.year-link').forEach(link => link.classList.remove('active'));
 
     cards.forEach(card => {
       const name = card.querySelector('.member-name').textContent.toLowerCase();
