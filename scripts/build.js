@@ -571,7 +571,7 @@ ${timelineLinks}
   <div class="sort-toggle" role="group" aria-label="Sort order">
     <button type="button" id="sort-asc" aria-pressed="true">
       <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5z"/></svg>
-      Oldest first
+      Originators first
     </button>
     <button type="button" id="sort-desc" aria-pressed="false">
       <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
