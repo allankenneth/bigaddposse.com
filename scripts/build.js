@@ -95,8 +95,8 @@ const html = `<!DOCTYPE html>
   --bg-dark: #0f0f1a;
   --bg-card: #1a1a2e;
   --bg-timeline: #16213e;
-  --accent: #e94560;
-  --accent-light: #ff6b6b;
+  --accent: #00d4ff;
+  --accent-light: #66e5ff;
   --text: #ccd6f6;
   --text-muted: #8892b0;
 }
@@ -174,7 +174,7 @@ a:hover {
 .btn:hover {
   color: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(233, 69, 96, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
 }
 
 .member-count {
@@ -193,7 +193,7 @@ a:hover {
   top: 0;
   z-index: 100;
   background: var(--bg-timeline);
-  border-bottom: 1px solid rgba(233, 69, 96, 0.2);
+  border-bottom: 1px solid rgba(0, 212, 255, 0.2);
   display: flex;
   align-items: center;
 }
@@ -245,7 +245,7 @@ a:hover {
 
 .year-link:hover {
   color: var(--text);
-  background: rgba(233, 69, 96, 0.1);
+  background: rgba(0, 212, 255, 0.1);
 }
 
 .year-link.active {
