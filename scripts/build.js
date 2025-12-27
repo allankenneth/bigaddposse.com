@@ -323,9 +323,13 @@ input:focus-visible {
   padding: 1.5rem 1rem;
 }
 
+.search-wrapper {
+  position: relative;
+}
+
 .search-box {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
   font-size: 1rem;
   border: 2px solid transparent;
   border-radius: 8px;
@@ -340,6 +344,40 @@ input:focus-visible {
 
 .search-box:focus {
   border-color: var(--accent);
+}
+
+.search-clear {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: color 0.2s, background 0.2s;
+}
+
+.search-clear:hover {
+  color: var(--text);
+  background: rgba(255,255,255,0.1);
+}
+
+.search-clear svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.search-wrapper.has-value .search-clear {
+  display: flex;
 }
 
 .visually-hidden {
@@ -628,7 +666,10 @@ ${timelineLinks}
 
 <div class="search-container">
   <label for="search" class="visually-hidden">Search members by name or nickname</label>
-  <input type="text" class="search-box" id="search" placeholder="Search by name or nickname..." autocomplete="off">
+  <div class="search-wrapper" id="search-wrapper">
+    <input type="text" class="search-box" id="search" placeholder="Search by name or nickname..." autocomplete="off">
+    <button type="button" class="search-clear" id="search-clear" aria-label="Clear search"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+  </div>
   <div class="sort-toggle" role="group" aria-label="Sort order">
     <button type="button" id="sort-asc" aria-pressed="true">
       <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5z"/></svg>
@@ -697,12 +738,24 @@ ${yearSections}
   // Search functionality - reads from DOM, no JSON needed
   const searchBox = document.getElementById('search');
   const searchInfo = document.getElementById('search-info');
+  const searchWrapper = document.getElementById('search-wrapper');
+  const searchClear = document.getElementById('search-clear');
+
+  // Clear button functionality
+  searchClear.addEventListener('click', function() {
+    searchBox.value = '';
+    searchBox.dispatchEvent(new Event('input'));
+    searchBox.focus();
+  });
 
   searchBox.addEventListener('input', function(e) {
     const query = e.target.value.toLowerCase().trim();
     const cards = document.querySelectorAll('.member-card');
     const sections = document.querySelectorAll('.year-section');
     let visibleCount = 0;
+
+    // Toggle clear button visibility
+    searchWrapper.classList.toggle('has-value', e.target.value.length > 0);
 
     if (!query) {
       isSearching = false;
