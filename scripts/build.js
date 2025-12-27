@@ -68,7 +68,7 @@ const yearSections = years.map(year => {
       : '';
 
     const memorialHtml = member.deceased
-      ? `\n      <span class="memorial-badge" aria-label="In memoriam" title="In memoriam">🕯️</span>`
+      ? `\n      <span class="memorial-badge" aria-label="In memoriam" data-tooltip="In memoriam"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c-1 2-3 4-3 6.5 0 2.5 1.5 4.5 3 4.5s3-2 3-4.5C15 6 13 4 12 2z"/><rect x="11" y="13" width="2" height="9" rx="1"/></svg></span>`
       : '';
 
     return `    <article class="member-card${member.video ? ' has-video' : ''}${member.deceased ? ' memorial' : ''}">
@@ -525,12 +525,56 @@ input:focus-visible {
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;
-  font-size: 1.25rem;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+  width: 36px;
+  height: 36px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 12px rgba(255, 180, 50, 0.6);
+  cursor: default;
+}
+
+.memorial-badge svg {
+  width: 20px;
+  height: 20px;
+  fill: #ffb832;
+  filter: drop-shadow(0 0 4px rgba(255, 180, 50, 0.8));
+}
+
+.memorial-badge::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  margin-top: 6px;
+  padding: 0.5rem 0.75rem;
+  background: rgba(0, 0, 0, 0.9);
+  color: #ffb832;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s, visibility 0.15s;
+  pointer-events: none;
+}
+
+.memorial-badge:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+.memorial-badge:hover {
+  z-index: 10;
 }
 
 .member-card.memorial {
   position: relative;
+  overflow: visible;
 }
 
 /* Hidden state for search */
