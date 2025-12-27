@@ -1,341 +1,1299 @@
-
 <!DOCTYPE html>
-<html lang="en-US" class="no-js no-svg">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="profile" href="http://gmpg.org/xfn/11">
-
 <title>Big Add Posse</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <style>
-h1 {
-	text-transform: uppercase;
+:root {
+  --bg-dark: #0f0f1a;
+  --bg-card: #1a1a2e;
+  --bg-timeline: #16213e;
+  --accent: #e94560;
+  --accent-light: #ff6b6b;
+  --text: #ccd6f6;
+  --text-muted: #8892b0;
 }
-h2 {
-	background-color: #000;
-	margin: 2rem 0;
-	padding: 1rem;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-img {
-	height: auto;
-	max-width: 100%;
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
-.desc {
-	background: #000;
-	border-radius: 4px;
-	font-size: 130%;
-	margin: 20px 0;
-	padding: 30px;
-	
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text);
+  line-height: 1.6;
 }
-.nickname {
-	display: block;
-	font-weight: bold;
-	text-transform: uppercase;
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent-light);
+}
+
+/* Header */
+.site-header {
+  text-align: center;
+  padding: 3rem 1rem 2rem;
+  background: linear-gradient(180deg, var(--bg-timeline) 0%, var(--bg-dark) 100%);
+}
+
+.site-title {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.25rem;
+  color: var(--text);
+  line-height: 0.9;
+}
+
+.site-title strong {
+  display: block;
+  font-size: 1.3em;
+  line-height: 0.9;
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.site-description {
+  max-width: 600px;
+  margin: 1rem auto;
+  color: var(--text-muted);
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 4px;
+  font-weight: 600;
+  margin-top: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn:hover {
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(233, 69, 96, 0.4);
+}
+
+.member-count {
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.member-count strong {
+  color: var(--accent);
+  font-size: 1.4em;
+}
+
+/* Timeline Navigation */
+.timeline-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg-timeline);
+  border-bottom: 1px solid rgba(233, 69, 96, 0.2);
+  display: flex;
+  align-items: center;
+}
+
+.timeline-nav-inner {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem 0.5rem 0;
+  gap: 0.5rem;
+  overflow-x: auto;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) var(--bg-timeline);
+}
+
+.timeline-nav-inner::-webkit-scrollbar {
+  height: 4px;
+}
+
+.timeline-nav-inner::-webkit-scrollbar-track {
+  background: var(--bg-timeline);
+}
+
+.timeline-nav-inner::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.timeline-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  white-space: nowrap;
+  padding-right: 0.5rem;
+  border-right: 1px solid rgba(255,255,255,0.1);
+  margin-right: 0.5rem;
+}
+
+.year-link {
+  padding: 0.5rem 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.year-link:hover {
+  color: var(--text);
+  background: rgba(233, 69, 96, 0.1);
+}
+
+.year-link.active {
+  color: #fff;
+  background: var(--accent);
+}
+
+.top-link {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-right: 1px solid rgba(255,255,255,0.1);
+  transition: color 0.2s;
+}
+
+.top-link:hover {
+  color: var(--text);
+}
+
+.top-link svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+/* Search */
+.search-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+.search-box {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: var(--bg-card);
+  color: var(--text);
+  transition: border-color 0.2s;
+}
+
+.search-box::placeholder {
+  color: var(--text-muted);
+}
+
+.search-box:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.search-info {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  min-height: 1.5rem;
+  padding: 0 1rem;
+}
+
+/* Main Content */
+.main-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem 4rem;
+}
+
+/* Year Sections */
+.year-section {
+  margin-bottom: 3rem;
+  scroll-margin-top: 80px;
+}
+
+.year-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent);
+}
+
+.year-header::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px var(--bg-dark), 0 0 0 6px var(--accent);
+}
+
+.year-title {
+  font-size: 1.75rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Member Grid */
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Member Cards */
+.member-card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.member-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.member-card img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
+
+.member-info {
+  padding: 1rem;
+  text-align: center;
+}
+
+.member-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+
+.member-nickname {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+}
+
+/* Video link button */
+.video-link {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 36px;
+  height: 36px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  transition: transform 0.2s, background 0.2s;
+}
+
+.video-link:hover {
+  transform: scale(1.1);
+  background: var(--accent-light);
+}
+
+.video-link svg {
+  width: 16px;
+  height: 16px;
+  fill: #fff;
+  margin-left: 2px;
+}
+
+/* Hidden state for search */
+.member-card.hidden,
+.year-section.hidden {
+  display: none;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .members-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .member-info {
+    padding: 0.75rem;
+  }
+
+  .member-name {
+    font-size: 0.85rem;
+  }
+
+  .member-nickname {
+    font-size: 0.7rem;
+  }
+
+  .timeline-label {
+    display: none;
+  }
 }
 </style>
-	</head>
+</head>
+<body>
 
-<body class="bg-dark text-white" style="padding-bottom: 20rem">
-<div class="container mb-3">
-<div class="row justify-content-md-center mb-3">
-<div class="col-md-9">
-<h1 class="text-center py-3 my-3" style="font-size: 420%">Big Add<br><strong style="font-size: 120%; line-height: .8">Posse</strong></h1>
-<div class="desc">
-	<p>The Big ADD Posse (BAP) are a group of skilled freestyle footbag players who have contributed to the progression of that sport in a unique way. The group is invite-only, and the only way to get an invitation is to shred hard in front of other members and prove your style.</p>
-<div class="text-center"><a class="btn btn-primary" href="tale-of-bap.html">Read the Tale of the BAP</a></div>
-</div>
-<h2 class="text-center howmany text-uppercase">There are <strong>84</strong> members of BAP</h2>
-</div>
-</div>
-</div>
-<nav class="p-3 sticky-top text-center nav-fill" style="background-color:#000">
-INDUCTION YEAR:<br>
-<a class="" href="#1992">1992</a> 
-<a class="" href="#1995">1995</a> 
-<a class="" href="#1996">1996</a> 
-<a class="" href="#1997">1997</a> 
-<a class="" href="#1998">1998</a> 
-<a class="" href="#1999">1999</a> 
-<a class="" href="#2000">2000</a> 
-<a class="" href="#2001">2001</a> 
-<a class="" href="#2002">2002</a> 
-<a class="" href="#2003">2003</a> 
-<a class="" href="#2004">2004</a> 
-<a class="" href="#2005">2005</a> 
-<a class="" href="#2006">2006</a> 
-<a class="" href="#2007">2007</a> 
-<a class="" href="#2008">2008</a> 
-<a class="" href="#2009">2009</a> 
-<a class="" href="#2010">2010</a> 
-<a class="" href="#2011">2011</a> 
-<a class="" href="#2012">2012</a> 
-<a class="" href="#2013">2013</a> 
-<a class="" href="#2014">2014</a> 
-<a class="" href="#2017">2017</a> 
-<a class="" href="#2018">2018</a> 
-<a class="" href="#2020">2020</a> 
-<a class="" href="#2021">2021</a> 
-<a class="" href="#2024">2024</a> 
-<a class="" href="#2025">2025</a> 
+<header class="site-header">
+  <h1 class="site-title">Big Add<strong>Posse</strong></h1>
+  <p class="site-description">The Big ADD Posse (BAP) are a group of skilled freestyle footbag players who have contributed to the progression of that sport in a unique way. The group is invite-only, and the only way to get an invitation is to shred hard in front of other members and prove your style.</p>
+  <a href="tale-of-bap.html" class="btn">Read the Tale of the BAP</a>
+  <p class="member-count">There are <strong>84</strong> members of BAP</p>
+</header>
+
+<nav class="timeline-nav" id="timeline-nav">
+  <a href="#" class="top-link" title="Back to top"><svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg></a>
+  <div class="timeline-nav-inner">
+    <a href="#y1992" class="year-link" data-year="1992">1992</a>
+    <a href="#y1995" class="year-link" data-year="1995">1995</a>
+    <a href="#y1996" class="year-link" data-year="1996">1996</a>
+    <a href="#y1997" class="year-link" data-year="1997">1997</a>
+    <a href="#y1998" class="year-link" data-year="1998">1998</a>
+    <a href="#y1999" class="year-link" data-year="1999">1999</a>
+    <a href="#y2000" class="year-link" data-year="2000">2000</a>
+    <a href="#y2001" class="year-link" data-year="2001">2001</a>
+    <a href="#y2002" class="year-link" data-year="2002">2002</a>
+    <a href="#y2003" class="year-link" data-year="2003">2003</a>
+    <a href="#y2004" class="year-link" data-year="2004">2004</a>
+    <a href="#y2005" class="year-link" data-year="2005">2005</a>
+    <a href="#y2006" class="year-link" data-year="2006">2006</a>
+    <a href="#y2007" class="year-link" data-year="2007">2007</a>
+    <a href="#y2008" class="year-link" data-year="2008">2008</a>
+    <a href="#y2009" class="year-link" data-year="2009">2009</a>
+    <a href="#y2010" class="year-link" data-year="2010">2010</a>
+    <a href="#y2011" class="year-link" data-year="2011">2011</a>
+    <a href="#y2012" class="year-link" data-year="2012">2012</a>
+    <a href="#y2013" class="year-link" data-year="2013">2013</a>
+    <a href="#y2014" class="year-link" data-year="2014">2014</a>
+    <a href="#y2017" class="year-link" data-year="2017">2017</a>
+    <a href="#y2018" class="year-link" data-year="2018">2018</a>
+    <a href="#y2020" class="year-link" data-year="2020">2020</a>
+    <a href="#y2021" class="year-link" data-year="2021">2021</a>
+    <a href="#y2024" class="year-link" data-year="2024">2024</a>
+    <a href="#y2025" class="year-link" data-year="2025">2025</a>
+  </div>
 </nav>
-<div class="container mb-3">
-<div class="row justify-content-md-center mb-3">
-<div class="col-md-10">
-<h2 id="1992">1992</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/ken-shults.jpg" alt="BAP" width="170" height="170" /><br />
-Kenny <span class="nickname">The Enforcer</span> Shults</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/richard-reese.jpg" alt="BAP" width="170" height="170" /><br />
-<span class="nickname">Rippin&#8217;</span> Rick Reese</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/peter-irish.jpg" alt="BAP" width="170" height="170" /><br />
-Peter <span class="nickname">The Executioner</span> Irish</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/profile.jpg" alt="BAP" width="170" height="170" /><br />
-Dimitri <span class="nickname">celsone</span> Kavouras</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/dennis-jones.jpg" alt="BAP" width="170" height="170" /><br />
-Dennis <span class="nickname">D-Money</span> Jones</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/tim-kelly.jpg" alt="BAP" width="170" height="170" /><br />
-Tim <span class="nickname">Stikman</span> Kelley</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/joseph-shaeffer.jpg" alt="BAP" width="170" height="170" /><br />
-Joey <span class="nickname">Za Za</span> Schaeffer</div>
+
+<div class="search-container">
+  <input type="text" class="search-box" id="search" placeholder="Search by name or nickname..." autocomplete="off">
 </div>
-<h2 id="1995">1995</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/tuan-vu.jpg" alt="BAP" width="170" height="170" /><br />
-Tuan <span class="nickname">Disco Ninja</span> Vu</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/eric-wulff.jpg" alt="BAP" width="170" height="170" /><br />
-Eric <span class="nickname">Iron Man</span> Wulff</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/scott-davidson.jpg" alt="BAP" width="170" height="170" /><br />
-Scott <span class="nickname">Enlightener</span> Davidson</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/greg-nelson.jpg" alt="BAP" width="170" height="170" /><br />
-Greg <span class="nickname">GF Smoothie</span> Nelson</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/steve-kremer.jpg" alt="BAP" width="170" height="170" /><br />
-Steve <span class="nickname">Kosmo</span> Kremer</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/josh-casey.jpg" alt="BAP" width="170" height="170" /><br />
-Josh <span class="nickname">Chiseler</span> Casey</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/paul-munger.jpg" alt="BAP" width="170" height="170" /><br />
-Paul <span class="nickname">Hu-Mongous</span> Munger</div>
-</div>
-<h2 id="1996">1996</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/daryl-genz.jpg" alt="BAP" width="170" height="170" /><br />
-Daryl <span class="nickname">Genzu Blades</span> Genz</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/ahren-gehrman.jpg" alt="BAP" width="170" height="170" /><br />
-Ahren <span class="nickname">Torch</span> Gehrman</div>
-</div>
-<h2 id="1997">1997</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/ryan-mulroney.jpg" alt="BAP" width="170" height="170" /><br />
-Ryan <span class="nickname">Regulator</span> Mulroney</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/red-husted.jpg" alt="BAP" width="170" height="170" /><br />
-Red <span class="nickname">Shred</span> Husted</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/tu-vu.jpg" alt="BAP" width="170" height="170" /><br />
-Tu <span class="nickname">huge</span> Vu</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/chad-devlahovich.jpg" alt="BAP" width="170" height="170" /><br />
-<span class="nickname">Big Add</span> Chad Devlahovich</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/profile.jpg" alt="BAP" width="170" height="170" /><br />
-Noah <span class="nickname">Merlin</span> Dubreuil</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/dave-holton.jpg" alt="BAP" width="170" height="170" /><br >
-Dave <span class="nickname">Highlander</span> Holton</div>
-</div>
-<h2 id="1998">1998</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/brian-mckenzie.jpg" alt="BAP" width="170" height="170" /><br />
-Brian <span class="nickname">Kamakenzie</span> McKenzie</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/eric-windsor.jpg" alt="BAP" width="170" height="170" /><br />
-Eric <span class="nickname">Wicked</span> Windsor</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/carol-wedemeyer.jpg" alt="BAP" width="170" height="170" /><br />
-Carol <span class="nickname">She blade</span> Wedemeyer</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/eliot-piltz.jpg" alt="BAP" width="170" height="170" /><br />
-<span class="nickname">Intergalactic</span> Eli Piltz</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/kyle-crawford.jpg" alt="BAP" width="170" height="170" /><br />
-<span class="nickname">Kung Fu</span> Kyle Crawford</div>
-</div>
-<h2 id="1999">1999</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/sunil-jani.jpg" alt="BAP" width="170" height="170" /><br />
-Sunil <span class="nickname">Tsunami</span> Jani</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/profile.jpg" alt="BAP" width="170" height="170" /><br />
-Mika <span class="nickname">Iceman</span> Koistinen</div>
-</div>
-<h2 id="2000">2000</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/toby-robinson.jpg" alt="BAP" width="170" height="170" /><br />
-Toby <span class="nickname">One</span> Robinson</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/jon-schneider.jpg" alt="BAP" width="170" height="170" /><br />
-Jonathan <span class="nickname">Outsider</span> Schneider</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/lon-smith.jpg" alt="BAP" width="170" height="170" /><br />
-<span class="nickname">Shred On</span> Lon Smith</div>
-<div style="clear:both; margin: 0 3rem"></div>
-</div>
-<h2 id="2001">2001</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/allan-haggett-2017.jpg" alt="BAP" width="170" height="170" /><br />
-Allan <span class="nickname">Allan</span> Haggett</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/yacine_merzouk.jpg" alt="BAP" width="170" height="170" /><br />
-Yacine <span class="nickname">Fiend</span> Merzouk</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/richard-abshire.jpg" alt="BAP" width="170" height="170" /><br />
-Richie <span class="nickname">renegade</span> Abshire</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/sebastien_duschesne.jpg" alt="BAP" width="170" height="170" /><br />
-Sebastien <span class="nickname">Hurricane</span> Duschesne</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/gordon_bevier.jpg" alt="BAP" width="170" height="170" /><br />
-Gordon Scott <span class="nickname">Flash</span> Bevier</div>
-</div>
-<h2 id="2002">2002</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/honza_weber.jpg" alt="BAP" width="170" height="170" /><br />
-Honza <span class="nickname">Webslinger</span> Weber</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/ales_zelinka.jpg" alt="BAP" width="170" height="170" /><br />
-Ales <span class="nickname">The Man of Steel</span> Zelinka</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/jim_penske.jpg" alt="BAP" width="170" height="170" /><br />
-Jim <span class="nickname">Pimpske</span> Penske</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/bryan-fournier.jpg" alt="BAP" width="170" height="170" /><br />
-<span class="nickname">Blackjack</span> Bryan Fournier</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/vasek_klouda.jpg" alt="BAP" width="170" height="170" /><br />
-Vaclav (Vasek) <span class="nickname">Super Glue</span> Klouda</div>
-</div>
-<h2 id="2003">2003</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/jere_vainikka.jpg" alt="BAP" width="170" height="170" /><br />
-Jere <span class="nickname">Smooth Criminal</span> Vainikka</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/yves_kreil.jpg" alt="BAP" width="170" height="170" /><br />
-Yves <span class="nickname">Krusher</span> Kreil</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/felix_zenger.jpg" alt="BAP" width="170" height="170" /><br />
-<span class="nickname">Stone Cold</span> Felix Zenger</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/tuukka-antikainen.jpg" alt="BAP" width="170" height="170" /><br />
-Tuukka <span class="nickname">TKO</span> Antikainen</div>
-</div>
-<h2 id="2004">2004</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/dylan_fry.jpg" alt="BAP" width="170" height="170" /><br />
-Dylan <span class="nickname">Stylon Dylon</span> Fry</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/nick_laroche.jpg" alt="BAP" width="170" height="170" /><br />
-Nick <span class="nickname">Slick Nick</span> Laroche</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/johnny-murphy.jpg" alt="BAP" width="170" height="170" /><br />
-Johnny <span class="nickname">Magic Feet (J$)</span> Murphy</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/jorden_moir.jpg" alt="BAP" width="170" height="170" /><br />
-Jorden <span class="nickname">The Destroyer</span> Moir</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/lasse-salmenhaara.jpg" alt="BAP" width="170" height="170" /><br />
-Lasse Salmenhaara</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/jere_linnanen.jpg" alt="BAP" width="170" height="170" /><br />
-<span class="nickname">Scary</span> Jere Linnanen</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/toni-paakkonen.jpg" alt="BAP" width="170" height="170" /><br />
-Toni <span class="nickname">the beast</span> Paakkonen</div>
-</div>
-<h2 id="2005">2005</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/juho_marjo.jpg" alt="BAP" width="170" height="170" /><br />
-Juho <span class="nickname">Super</span> Marjo</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/mikko_lepisto.jpg" alt="BAP" width="170" height="170" /><br />
-Mikko <span class="nickname">Uniqueo</span> Lepisto</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/karim_daouk.jpg" alt="BAP" width="170" height="170" /><br />
-Karim <span class="nickname">Special K</span> Daouk</div>
-</div>
-<h2 id="2006">2006</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/phil_morrison.jpg" alt="BAP" width="170" height="170" /><br />
-Phillip <span class="nickname">Red Rocket</span> Morrison</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/aleksi_airinen.jpg" alt="BAP" width="170" height="170" /><br />
-Aleksi <span class="nickname">Air</span> Airinen</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/tina_aeberli.jpg" alt="BAP" width="170" height="170" /><br />
-Tina <span class="nickname">Swiss Miss</span> Aberli</div>
-</div>
-<h2 id="2007">2007</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/damian_gielnicki.jpg" alt="BAP" width="170" height="170" /><br />
-Damian <span class="nickname">Twister</span> Gielnicki</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/sergey_kozlov.jpg" alt="BAP" width="170" height="170" /><br />
-Sergey <span class="nickname">Kalashnikov</span> Kozlov</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/serge_kaldany.jpg" alt="BAP" width="170" height="170" /><br />
-Serge <span class="nickname">Cerberus</span> Kaldany</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/david_clavens.jpg" alt="BAP" width="170" height="170" /><br />
-David <span class="nickname">Cleaver</span> Clavens</div>
-</div>
-<h2 id="2008">2008</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/profile.jpg" alt="BAP" width="170" height="170" /><br />
-Arek <span class="nickname">Hi-Tek</span> Dzudzinski</div>
-</div>
-<h2 id="2009">2009</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/nick_landes.jpg" alt="BAP" width="170" height="170" /><br />
-Nick Landes <span class="nickname">The Praying Mantis</span></div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/anssi_sundberg.jpg" alt="BAP" width="170" height="170" /><br />
-Anssi <span class="nickname">Accelerator</span> Sundberg</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/milan_benda.jpg" alt="BAP" width="170" height="170" /><br />
-Milan <span class="nickname">Megatron</span> Benda</div>
-</div>
-<h2 id="2010">2010</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/evan_gatesman.png" alt="BAP" width="170" height="170" /><br />
-Evan <span class="nickname">Silencer</span> Gatesman</div>
-</div>
-<h2 id="2011">2011</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/olav_piwowar.jpg" alt="BAP" width="170" height="170" /><br />
-Olav <span class="nickname">Anaconda</span> Piwowar</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/jay_boychuk.jpg" alt="BAP" width="170" height="170" /><br />
-Jay <span class="nickname">(the) Creator</span> Boychuk</div>
-</div>
-<h2 id="2012">2012</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/marcin_bujko.jpg" alt="BAP" width="170" height="170" /><br />
-Marcin <span class="nickname">Stylish</span> Bujko</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/lauri_airinen.jpg" alt="BAP" width="170" height="170" /><br />
-Lauri <span class="nickname">Madness</span> Airinen</div>
-</div>
-<h2 id="2013">2013</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/jindra_smola.jpg" alt="BAP" width="170" height="170" /><br />
-Jindra <span class="nickname">FootZepp</span> Smola</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/rene_ruhr.jpg" alt="BAP" width="170" height="170" /><br />
-Rene <span class="nickname">Collider</span> Ruhr</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/johnnysuderman.jpg" alt="BAP" width="170" height="170" /><br />
-Johnny <span class="nickname">The Canadian Hero</span> Suderman</div>
-</div>
-<h2 id="2014">2014</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/mathias-blau.jpg" alt="BAP" width="170" height="170" /><br />
-Mathias <span class="nickname">The Matrix</span> Blau</div>
-</div>
-<h2 id="2017">2017</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/nick-houdini-polini.jpg" alt="BAP" width="170" height="170" /><br />
-Nick <span class="nickname">HOUDINI</span> Polini</div>
-</div>
-<h2 id="2018">2018</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/13439228_1090331857677433_4827374749964852323_n.jpg" alt="BAP" width="170" height="170" /><br />
-Dominik <span class="nickname">NUNCHAKU</span> Šimků</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/37241395_10156116269430971_8424582865114628096_n.jpg" alt="BAP" width="170" height="170" /><br />
-Taishi <span class="nickname">SHURIKEN</span> Ishida</div>
-</div>
-<h2 id="2020">2020</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/rafal-kaleta.jpg" alt="BAP" width="170" height="170" /><br />
-Rafał <span class="nickname">KILLA</span> Kaleta</div>
-</div>
-<h2 id="2021">2021</h2>
-<div class="row">
-<div class="shredder col-6 col-md-4 text-center"><img src="img/christopher-schillem.jpg" alt="BAP" width="170" height="170" /><br />
-Christopher <span class="nickname">The Machine</span> Schillem</div>
-<div class="shredder col-6 col-md-4 text-center"><img src="img/pawel-nowak.jpg" alt="BAP" width="170" height="170" /><br />
-Pawel <span class="nickname">Dynomite</span> Nowak</div>
-</div>
-<h2 id="2024">2024</h2>
-<div class="row"> 
-<div class="shredder col-6 col-md-4 text-center"><img src="img/dante-diotallevi.jpg" alt="BAP" width="170" height="170" /><br /> 
-Dante <span class="nickname">The Inferno</span> Diotallevi</div>
-</div>
-<h2 id="2025">2025</h2>
-<div class="row"> 
-<div class="shredder col-6 col-md-4 text-center"><img src="img/jakub-mosciszewski.jpg" alt="BAP" width="170" height="170" /><br />
-Jakub <span class="nickname">Endurance</span> Mościszewski</div>
-</div>
-</div>
-</div>
-</div>
+<p class="search-info" id="search-info"></p>
+
+<main class="main-content" id="members">
+
+<section class="year-section" id="y1992">
+  <header class="year-header"><h2 class="year-title">1992</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/ken-shults.jpg" alt="Kenny Shults" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Kenny Shults</h3>
+        <span class="member-nickname">The Enforcer</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/richard-reese.jpg" alt="Rick Reese" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Rick Reese</h3>
+        <span class="member-nickname">Rippin'</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/peter-irish.jpg" alt="Peter Irish" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Peter Irish</h3>
+        <span class="member-nickname">The Executioner</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/profile.jpg" alt="Dimitri Kavouras" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Dimitri Kavouras</h3>
+        <span class="member-nickname">Celsone</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/dennis-jones.jpg" alt="Dennis Jones" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Dennis Jones</h3>
+        <span class="member-nickname">D-Money</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/tim-kelly.jpg" alt="Tim Kelley" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Tim Kelley</h3>
+        <span class="member-nickname">Stikman</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/joseph-shaeffer.jpg" alt="Joey Schaeffer" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Joey Schaeffer</h3>
+        <span class="member-nickname">Za Za</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y1995">
+  <header class="year-header"><h2 class="year-title">1995</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/tuan-vu.jpg" alt="Tuan Vu" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Tuan Vu</h3>
+        <span class="member-nickname">Disco Ninja</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/eric-wulff.jpg" alt="Eric Wulff" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Eric Wulff</h3>
+        <span class="member-nickname">Iron Man</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/scott-davidson.jpg" alt="Scott Davidson" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Scott Davidson</h3>
+        <span class="member-nickname">Enlightener</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/greg-nelson.jpg" alt="Greg Nelson" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Greg Nelson</h3>
+        <span class="member-nickname">GF Smoothie</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/steve-kremer.jpg" alt="Steve Kremer" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Steve Kremer</h3>
+        <span class="member-nickname">Kosmo</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/josh-casey.jpg" alt="Josh Casey" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Josh Casey</h3>
+        <span class="member-nickname">Chiseler</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/paul-munger.jpg" alt="Paul Munger" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Paul Munger</h3>
+        <span class="member-nickname">Hu-Mongous</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y1996">
+  <header class="year-header"><h2 class="year-title">1996</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/daryl-genz.jpg" alt="Daryl Genz" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Daryl Genz</h3>
+        <span class="member-nickname">Genzu Blades</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/ahren-gehrman.jpg" alt="Ahren Gehrman" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Ahren Gehrman</h3>
+        <span class="member-nickname">Torch</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y1997">
+  <header class="year-header"><h2 class="year-title">1997</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/ryan-mulroney.jpg" alt="Ryan Mulroney" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Ryan Mulroney</h3>
+        <span class="member-nickname">Regulator</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/red-husted.jpg" alt="Red Husted" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Red Husted</h3>
+        <span class="member-nickname">Shred</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/tu-vu.jpg" alt="Tu Vu" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Tu Vu</h3>
+        <span class="member-nickname">Huge</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/chad-devlahovich.jpg" alt="Chad Devlahovich" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Chad Devlahovich</h3>
+        <span class="member-nickname">Big Add</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/profile.jpg" alt="Noah Dubreuil" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Noah Dubreuil</h3>
+        <span class="member-nickname">Merlin</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/dave-holton.jpg" alt="Dave Holton" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Dave Holton</h3>
+        <span class="member-nickname">Highlander</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y1998">
+  <header class="year-header"><h2 class="year-title">1998</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/brian-mckenzie.jpg" alt="Brian McKenzie" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Brian McKenzie</h3>
+        <span class="member-nickname">Kamakenzie</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/eric-windsor.jpg" alt="Eric Windsor" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Eric Windsor</h3>
+        <span class="member-nickname">Wicked</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/carol-wedemeyer.jpg" alt="Carol Wedemeyer" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Carol Wedemeyer</h3>
+        <span class="member-nickname">She blade</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/eliot-piltz.jpg" alt="Eli Piltz" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Eli Piltz</h3>
+        <span class="member-nickname">Intergalactic</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/kyle-crawford.jpg" alt="Kyle Crawford" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Kyle Crawford</h3>
+        <span class="member-nickname">Kung Fu</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y1999">
+  <header class="year-header"><h2 class="year-title">1999</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/sunil-jani.jpg" alt="Sunil Jani" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Sunil Jani</h3>
+        <span class="member-nickname">Tsunami</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/profile.jpg" alt="Mika Koistinen" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Mika Koistinen</h3>
+        <span class="member-nickname">Iceman</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2000">
+  <header class="year-header"><h2 class="year-title">2000</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/toby-robinson.jpg" alt="Toby Robinson" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Toby Robinson</h3>
+        <span class="member-nickname">One</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/jon-schneider.jpg" alt="Jonathan Schneider" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Jonathan Schneider</h3>
+        <span class="member-nickname">Outsider</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/lon-smith.jpg" alt="Lon Smith" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Lon Smith</h3>
+        <span class="member-nickname">Shred On</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2001">
+  <header class="year-header"><h2 class="year-title">2001</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/allan-haggett-2017.jpg" alt="Allan Haggett" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Allan Haggett</h3>
+        <span class="member-nickname">Allan</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/yacine_merzouk.jpg" alt="Yacine Merzouk" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Yacine Merzouk</h3>
+        <span class="member-nickname">Fiend</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/richard-abshire.jpg" alt="Richie Abshire" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Richie Abshire</h3>
+        <span class="member-nickname">Renegade</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/sebastien_duschesne.jpg" alt="Sebastien Duschesne" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Sebastien Duschesne</h3>
+        <span class="member-nickname">Hurricane</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/gordon_bevier.jpg" alt="Gordon Scott Bevier" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Gordon Scott Bevier</h3>
+        <span class="member-nickname">Flash</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2002">
+  <header class="year-header"><h2 class="year-title">2002</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/honza_weber.jpg" alt="Honza Weber" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Honza Weber</h3>
+        <span class="member-nickname">Webslinger</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/ales_zelinka.jpg" alt="Ales Zelinka" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Ales Zelinka</h3>
+        <span class="member-nickname">The Man of Steel</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/jim_penske.jpg" alt="Jim Penske" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Jim Penske</h3>
+        <span class="member-nickname">Pimpske</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/bryan-fournier.jpg" alt="Bryan Fournier" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Bryan Fournier</h3>
+        <span class="member-nickname">Blackjack</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/vasek_klouda.jpg" alt="Vaclav (Vasek) Klouda" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Vaclav (Vasek) Klouda</h3>
+        <span class="member-nickname">Super Glue</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2003">
+  <header class="year-header"><h2 class="year-title">2003</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/jere_vainikka.jpg" alt="Jere Vainikka" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Jere Vainikka</h3>
+        <span class="member-nickname">Smooth Criminal</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/yves_kreil.jpg" alt="Yves Kreil" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Yves Kreil</h3>
+        <span class="member-nickname">Krusher</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/felix_zenger.jpg" alt="Felix Zenger" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Felix Zenger</h3>
+        <span class="member-nickname">Stone Cold</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/tuukka-antikainen.jpg" alt="Tuukka Antikainen" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Tuukka Antikainen</h3>
+        <span class="member-nickname">Tko</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2004">
+  <header class="year-header"><h2 class="year-title">2004</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/dylan_fry.jpg" alt="Dylan Fry" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Dylan Fry</h3>
+        <span class="member-nickname">Stylon Dylon</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/nick_laroche.jpg" alt="Nick Laroche" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Nick Laroche</h3>
+        <span class="member-nickname">Slick Nick</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/johnny-murphy.jpg" alt="Johnny Murphy" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Johnny Murphy</h3>
+        <span class="member-nickname">Magic Feet (J$)</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/jorden_moir.jpg" alt="Jorden Moir" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Jorden Moir</h3>
+        <span class="member-nickname">The Destroyer</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/lasse-salmenhaara.jpg" alt="Lasse Salmenhaara" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Lasse Salmenhaara</h3>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/jere_linnanen.jpg" alt="Jere Linnanen" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Jere Linnanen</h3>
+        <span class="member-nickname">Scary</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/toni-paakkonen.jpg" alt="Toni Paakkonen" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Toni Paakkonen</h3>
+        <span class="member-nickname">The Beast</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2005">
+  <header class="year-header"><h2 class="year-title">2005</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/juho_marjo.jpg" alt="Juho Marjo" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Juho Marjo</h3>
+        <span class="member-nickname">Super</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/mikko_lepisto.jpg" alt="Mikko Lepisto" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Mikko Lepisto</h3>
+        <span class="member-nickname">Uniqueo</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/karim_daouk.jpg" alt="Karim Daouk" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Karim Daouk</h3>
+        <span class="member-nickname">Special K</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2006">
+  <header class="year-header"><h2 class="year-title">2006</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/phil_morrison.jpg" alt="Phillip Morrison" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Phillip Morrison</h3>
+        <span class="member-nickname">Red Rocket</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/aleksi_airinen.jpg" alt="Aleksi Airinen" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Aleksi Airinen</h3>
+        <span class="member-nickname">Air</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/tina_aeberli.jpg" alt="Tina Aberli" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Tina Aberli</h3>
+        <span class="member-nickname">Swiss Miss</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2007">
+  <header class="year-header"><h2 class="year-title">2007</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/damian_gielnicki.jpg" alt="Damian Gielnicki" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Damian Gielnicki</h3>
+        <span class="member-nickname">Twister</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/sergey_kozlov.jpg" alt="Sergey Kozlov" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Sergey Kozlov</h3>
+        <span class="member-nickname">Kalashnikov</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/serge_kaldany.jpg" alt="Serge Kaldany" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Serge Kaldany</h3>
+        <span class="member-nickname">Cerberus</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/david_clavens.jpg" alt="David Clavens" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">David Clavens</h3>
+        <span class="member-nickname">Cleaver</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2008">
+  <header class="year-header"><h2 class="year-title">2008</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/profile.jpg" alt="Arek Dzudzinski" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Arek Dzudzinski</h3>
+        <span class="member-nickname">Hi-Tek</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2009">
+  <header class="year-header"><h2 class="year-title">2009</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/nick_landes.jpg" alt="Nick Landes" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Nick Landes</h3>
+        <span class="member-nickname">The Praying Mantis</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/anssi_sundberg.jpg" alt="Anssi Sundberg" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Anssi Sundberg</h3>
+        <span class="member-nickname">Accelerator</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/milan_benda.jpg" alt="Milan Benda" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Milan Benda</h3>
+        <span class="member-nickname">Megatron</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2010">
+  <header class="year-header"><h2 class="year-title">2010</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/evan_gatesman.png" alt="Evan Gatesman" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Evan Gatesman</h3>
+        <span class="member-nickname">Silencer</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2011">
+  <header class="year-header"><h2 class="year-title">2011</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/olav_piwowar.jpg" alt="Olav Piwowar" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Olav Piwowar</h3>
+        <span class="member-nickname">Anaconda</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/jay_boychuk.jpg" alt="Jay Boychuk" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Jay Boychuk</h3>
+        <span class="member-nickname">(the) Creator</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2012">
+  <header class="year-header"><h2 class="year-title">2012</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/marcin_bujko.jpg" alt="Marcin Bujko" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Marcin Bujko</h3>
+        <span class="member-nickname">Stylish</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/lauri_airinen.jpg" alt="Lauri Airinen" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Lauri Airinen</h3>
+        <span class="member-nickname">Madness</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2013">
+  <header class="year-header"><h2 class="year-title">2013</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/jindra_smola.jpg" alt="Jindra Smola" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Jindra Smola</h3>
+        <span class="member-nickname">FootZepp</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/rene_ruhr.jpg" alt="Rene Ruhr" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Rene Ruhr</h3>
+        <span class="member-nickname">Collider</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/johnnysuderman.jpg" alt="Johnny Suderman" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Johnny Suderman</h3>
+        <span class="member-nickname">The Canadian Hero</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2014">
+  <header class="year-header"><h2 class="year-title">2014</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/mathias-blau.jpg" alt="Mathias Blau" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Mathias Blau</h3>
+        <span class="member-nickname">The Matrix</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2017">
+  <header class="year-header"><h2 class="year-title">2017</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/nick-houdini-polini.jpg" alt="Nick Polini" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Nick Polini</h3>
+        <span class="member-nickname">Houdini</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2018">
+  <header class="year-header"><h2 class="year-title">2018</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/13439228_1090331857677433_4827374749964852323_n.jpg" alt="Dominik Šimků" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Dominik Šimků</h3>
+        <span class="member-nickname">Nunchaku</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/37241395_10156116269430971_8424582865114628096_n.jpg" alt="Taishi Ishida" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Taishi Ishida</h3>
+        <span class="member-nickname">Shuriken</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2020">
+  <header class="year-header"><h2 class="year-title">2020</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/rafal-kaleta.jpg" alt="Rafał Kaleta" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Rafał Kaleta</h3>
+        <span class="member-nickname">Killa</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2021">
+  <header class="year-header"><h2 class="year-title">2021</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/christopher-schillem.jpg" alt="Christopher Schillem" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Christopher Schillem</h3>
+        <span class="member-nickname">The Machine</span>
+      </div>
+    </article>
+    <article class="member-card">
+      <img src="img/pawel-nowak.jpg" alt="Pawel Nowak" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Pawel Nowak</h3>
+        <span class="member-nickname">Dynomite</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2024">
+  <header class="year-header"><h2 class="year-title">2024</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/dante-diotallevi.jpg" alt="Dante Diotallevi" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Dante Diotallevi</h3>
+        <span class="member-nickname">The Inferno</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="year-section" id="y2025">
+  <header class="year-header"><h2 class="year-title">2025</h2></header>
+  <div class="members-grid">
+    <article class="member-card">
+      <img src="img/jakub-mosciszewski.jpg" alt="Jakub Mościszewski" loading="lazy">
+      <div class="member-info">
+        <h3 class="member-name">Jakub Mościszewski</h3>
+        <span class="member-nickname">Endurance</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function() {
+  // Scrollspy for timeline navigation
+  const sections = document.querySelectorAll('.year-section');
+  const yearLinks = document.querySelectorAll('.year-link');
+  const nav = document.getElementById('timeline-nav');
+  const navInner = nav.querySelector('.timeline-nav-inner');
+  let isSearching = false;
+
+  function updateActiveYear() {
+    // Disable scrollspy highlighting when searching
+    if (isSearching) {
+      yearLinks.forEach(link => link.classList.remove('active'));
+      return;
+    }
+
+    const navHeight = nav.offsetHeight + 20;
+    let current = '';
+
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= navHeight + 100) {
+        current = section.id;
+      }
+    });
+
+    yearLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+        // Scroll nav horizontally to show active year (without affecting page scroll)
+        const linkLeft = link.offsetLeft;
+        const navWidth = navInner.offsetWidth;
+        const linkWidth = link.offsetWidth;
+        navInner.scrollTo({
+          left: linkLeft - (navWidth / 2) + (linkWidth / 2),
+          behavior: 'smooth'
+        });
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveYear, { passive: true });
+  updateActiveYear();
+
+  // Search functionality - reads from DOM, no JSON needed
+  const searchBox = document.getElementById('search');
+  const searchInfo = document.getElementById('search-info');
+  const cards = document.querySelectorAll('.member-card');
+
+  searchBox.addEventListener('input', function(e) {
+    const query = e.target.value.toLowerCase().trim();
+    let visibleCount = 0;
+
+    if (!query) {
+      isSearching = false;
+      cards.forEach(card => card.classList.remove('hidden'));
+      sections.forEach(section => section.classList.remove('hidden'));
+      searchInfo.textContent = '';
+      updateActiveYear();
+      return;
+    }
+
+    isSearching = true;
+    yearLinks.forEach(link => link.classList.remove('active'));
+
+    cards.forEach(card => {
+      const name = card.querySelector('.member-name').textContent.toLowerCase();
+      const nicknameEl = card.querySelector('.member-nickname');
+      const nickname = nicknameEl ? nicknameEl.textContent.toLowerCase() : '';
+
+      if (name.includes(query) || nickname.includes(query)) {
+        card.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+
+    sections.forEach(section => {
+      const visibleCards = section.querySelectorAll('.member-card:not(.hidden)');
+      if (visibleCards.length === 0) {
+        section.classList.add('hidden');
+      } else {
+        section.classList.remove('hidden');
+      }
+    });
+
+    searchInfo.textContent = `Showing ${visibleCount} of ${cards.length} members`;
+  });
+
+  // Enhance with video links from members.json
+  fetch('members.json')
+    .then(res => res.json())
+    .then(members => {
+      const videoMap = {};
+      members.forEach(m => {
+        if (m.video) {
+          // Create lookup by normalized name
+          const key = m.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+          videoMap[key] = m.video;
+        }
+      });
+
+      cards.forEach(card => {
+        const nameEl = card.querySelector('.member-name');
+        const name = nameEl.textContent.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+        if (videoMap[name]) {
+          const link = document.createElement('a');
+          link.href = videoMap[name];
+          link.target = '_blank';
+          link.rel = 'noopener';
+          link.className = 'video-link';
+          link.title = 'Watch video';
+          link.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+          card.style.position = 'relative';
+          card.appendChild(link);
+        }
+      });
+    })
+    .catch(() => {
+      // Silently fail - page works without video links
+    });
+})();
+</script>
+
 </body>
 </html>
