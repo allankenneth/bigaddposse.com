@@ -272,6 +272,47 @@ input:focus-visible {
   padding: 0 1rem;
 }
 
+/* Sort toggle */
+.sort-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.sort-toggle button {
+  background: var(--bg-card);
+  border: 2px solid transparent;
+  color: var(--text-muted);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.sort-toggle button:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.sort-toggle button[aria-pressed="true"] {
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+}
+
+.sort-toggle button svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
 /* Main Content */
 .main-content {
   max-width: 1400px;
@@ -467,6 +508,16 @@ input:focus-visible {
 <div class="search-container">
   <label for="search" class="visually-hidden">Search members by name or nickname</label>
   <input type="text" class="search-box" id="search" placeholder="Search by name or nickname..." autocomplete="off">
+  <div class="sort-toggle" role="group" aria-label="Sort order">
+    <button type="button" id="sort-asc" aria-pressed="true">
+      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5z"/></svg>
+      Oldest first
+    </button>
+    <button type="button" id="sort-desc" aria-pressed="false">
+      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      Newest first
+    </button>
+  </div>
 </div>
 <p class="search-info" id="search-info" aria-live="polite"></p>
 
@@ -1348,6 +1399,37 @@ input:focus-visible {
     });
 
     searchInfo.textContent = `Showing ${visibleCount} of ${cards.length} members`;
+  });
+
+  // Sort toggle functionality
+  const sortAsc = document.getElementById('sort-asc');
+  const sortDesc = document.getElementById('sort-desc');
+  const main = document.getElementById('members');
+
+  function reverseOrder() {
+    // Reverse year sections in the DOM
+    const sectionsArray = Array.from(main.querySelectorAll('.year-section'));
+    sectionsArray.reverse().forEach(section => main.appendChild(section));
+
+    // Reverse timeline nav links
+    const linksArray = Array.from(navInner.querySelectorAll('.year-link'));
+    linksArray.reverse().forEach(link => navInner.appendChild(link));
+  }
+
+  sortAsc.addEventListener('click', function() {
+    if (this.getAttribute('aria-pressed') === 'true') return;
+    this.setAttribute('aria-pressed', 'true');
+    sortDesc.setAttribute('aria-pressed', 'false');
+    reverseOrder();
+    updateActiveYear();
+  });
+
+  sortDesc.addEventListener('click', function() {
+    if (this.getAttribute('aria-pressed') === 'true') return;
+    this.setAttribute('aria-pressed', 'true');
+    sortAsc.setAttribute('aria-pressed', 'false');
+    reverseOrder();
+    updateActiveYear();
   });
 })();
 </script>
