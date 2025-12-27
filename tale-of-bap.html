@@ -21,6 +21,13 @@
   padding: 0;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--bg-dark);
@@ -35,6 +42,31 @@ a {
 
 a:hover {
   color: var(--accent-light);
+}
+
+/* Focus styles */
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: #000;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  z-index: 1000;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 1rem;
 }
 
 /* Header */
@@ -66,7 +98,7 @@ a:hover {
   display: inline-block;
   padding: 0.75rem 1.5rem;
   background: var(--accent);
-  color: #fff;
+  color: #000;
   border-radius: 4px;
   font-weight: 600;
   margin-top: 1.5rem;
@@ -74,9 +106,9 @@ a:hover {
 }
 
 .btn:hover {
-  color: #fff;
+  color: #000;
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(233, 69, 96, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
 }
 
 /* Article */
@@ -121,7 +153,7 @@ a:hover {
   font-size: 1.4rem;
   margin: 2rem 0 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(233, 69, 96, 0.3);
+  border-bottom: 1px solid rgba(0, 212, 255, 0.3);
 }
 
 .article-content h4:first-child {
@@ -134,7 +166,7 @@ a:hover {
 }
 
 .article-content ul {
-  background: rgba(233, 69, 96, 0.1);
+  background: rgba(0, 212, 255, 0.1);
   border-radius: 8px;
   padding: 1.5rem 1.5rem 1.5rem 2.5rem;
   margin-bottom: 1.5rem;
@@ -165,7 +197,7 @@ a:hover {
 }
 
 blockquote {
-  background: rgba(233, 69, 96, 0.1);
+  background: rgba(0, 212, 255, 0.1);
   border-left: 4px solid var(--accent);
   padding: 1.5rem;
   margin: 1.5rem 0;
@@ -187,6 +219,8 @@ blockquote {
 </head>
 <body>
 
+<a href="#article" class="skip-link">Skip to article</a>
+
 <header class="site-header">
   <h1 class="site-title">Big Add<strong>Posse</strong></h1>
   <a href="./" class="btn">View Member Roster</a>
@@ -202,7 +236,7 @@ blockquote {
     </div>
   </header>
 
-  <article class="article-content">
+  <article class="article-content" id="article">
     <h4>Part 1: The Legacy Begins</h4>
 
     <blockquote>
