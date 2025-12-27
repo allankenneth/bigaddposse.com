@@ -63,8 +63,12 @@ const yearSections = years.map(year => {
       ? `\n        <span class="member-nickname">${escapeHtml(formatNickname(member.nickname))}</span>`
       : '';
 
-    return `    <article class="member-card">
-      <img src="${escapeHtml(member.photo)}" alt="${escapeHtml(member.name)}" loading="lazy">
+    const videoHtml = member.video
+      ? `\n      <a href="${escapeHtml(member.video)}" target="_blank" rel="noopener" class="video-link" title="Watch video"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>`
+      : '';
+
+    return `    <article class="member-card${member.video ? ' has-video' : ''}">
+      <img src="${escapeHtml(member.photo)}" alt="${escapeHtml(member.name)}" loading="lazy">${videoHtml}
       <div class="member-info">
         <h3 class="member-name">${escapeHtml(member.name)}</h3>${nicknameHtml}
       </div>
@@ -358,6 +362,10 @@ a:hover {
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
+.member-card.has-video {
+  position: relative;
+}
+
 .member-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
@@ -567,40 +575,6 @@ ${yearSections}
 
     searchInfo.textContent = \`Showing \${visibleCount} of \${cards.length} members\`;
   });
-
-  // Enhance with video links from members.json
-  fetch('members.json')
-    .then(res => res.json())
-    .then(members => {
-      const videoMap = {};
-      members.forEach(m => {
-        if (m.video) {
-          // Create lookup by normalized name
-          const key = m.name.toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g, '');
-          videoMap[key] = m.video;
-        }
-      });
-
-      cards.forEach(card => {
-        const nameEl = card.querySelector('.member-name');
-        const name = nameEl.textContent.toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g, '');
-
-        if (videoMap[name]) {
-          const link = document.createElement('a');
-          link.href = videoMap[name];
-          link.target = '_blank';
-          link.rel = 'noopener';
-          link.className = 'video-link';
-          link.title = 'Watch video';
-          link.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
-          card.style.position = 'relative';
-          card.appendChild(link);
-        }
-      });
-    })
-    .catch(() => {
-      // Silently fail - page works without video links
-    });
 })();
 </script>
 
