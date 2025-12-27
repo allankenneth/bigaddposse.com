@@ -67,8 +67,12 @@ const yearSections = years.map(year => {
       ? `\n      <a href="${escapeHtml(member.video)}" target="_blank" rel="noopener" class="video-link" aria-label="Watch ${escapeHtml(member.name)} video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>`
       : '';
 
-    return `    <article class="member-card${member.video ? ' has-video' : ''}">
-      <img src="${escapeHtml(member.photo)}" alt="${escapeHtml(member.name)}" loading="lazy">${videoHtml}
+    const memorialHtml = member.deceased
+      ? `\n      <span class="memorial-badge" aria-label="In memoriam" title="In memoriam">🕯️</span>`
+      : '';
+
+    return `    <article class="member-card${member.video ? ' has-video' : ''}${member.deceased ? ' memorial' : ''}">
+      <img src="${escapeHtml(member.photo)}" alt="${escapeHtml(member.name)}" loading="lazy">${videoHtml}${memorialHtml}
       <div class="member-info">
         <h3 class="member-name">${escapeHtml(member.name)}</h3>${nicknameHtml}
       </div>
@@ -514,6 +518,19 @@ input:focus-visible {
   height: 16px;
   fill: #000;
   margin-left: 2px;
+}
+
+/* Memorial badge */
+.memorial-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  font-size: 1.25rem;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+}
+
+.member-card.memorial {
+  position: relative;
 }
 
 /* Hidden state for search */

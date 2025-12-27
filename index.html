@@ -430,6 +430,19 @@ input:focus-visible {
   margin-left: 2px;
 }
 
+/* Memorial badge */
+.memorial-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  font-size: 1.25rem;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+}
+
+.member-card.memorial {
+  position: relative;
+}
+
 /* Hidden state for search */
 .member-card.hidden,
 .year-section.hidden {
@@ -534,9 +547,10 @@ input:focus-visible {
         <span class="member-nickname">The Enforcer</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video memorial">
       <img src="img/richard-reese.jpg" alt="Rick Reese" loading="lazy">
       <a href="https://www.youtube.com/watch?v=rKlY3_qaE3w" target="_blank" rel="noopener" class="video-link" aria-label="Watch Rick Reese video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="memorial-badge" aria-label="In memoriam" title="In memoriam">🕯️</span>
       <div class="member-info">
         <h3 class="member-name">Rick Reese</h3>
         <span class="member-nickname">Rippin'</span>
@@ -1192,9 +1206,10 @@ input:focus-visible {
 <section class="year-section" id="y2013">
   <header class="year-header"><h2 class="year-title">2013</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video memorial">
       <img src="img/jindra_smola.jpg" alt="Jindra Smola" loading="lazy">
       <a href="https://www.youtube.com/watch?v=CJWN4DNGVAw" target="_blank" rel="noopener" class="video-link" aria-label="Watch Jindra Smola video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="memorial-badge" aria-label="In memoriam" title="In memoriam">🕯️</span>
       <div class="member-info">
         <h3 class="member-name">Jindra Smola</h3>
         <span class="member-nickname">FootZepp</span>

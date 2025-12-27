@@ -11,7 +11,8 @@
     "nickname": "Rippin'",
     "year": 1992,
     "photo": "img/richard-reese.jpg",
-    "video": "https://www.youtube.com/watch?v=rKlY3_qaE3w"
+    "video": "https://www.youtube.com/watch?v=rKlY3_qaE3w",
+    "deceased": true
   },
   {
     "name": "Peter Irish",
@@ -508,7 +509,8 @@
     "nickname": "FootZepp",
     "year": 2013,
     "photo": "img/jindra_smola.jpg",
-    "video": "https://www.youtube.com/watch?v=CJWN4DNGVAw"
+    "video": "https://www.youtube.com/watch?v=CJWN4DNGVAw",
+    "deceased": true
   },
   {
     "name": "Rene Ruhr",
