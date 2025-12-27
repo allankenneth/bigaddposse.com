@@ -64,7 +64,7 @@ const yearSections = years.map(year => {
       : '';
 
     const videoHtml = member.video
-      ? `\n      <a href="${escapeHtml(member.video)}" target="_blank" rel="noopener" class="video-link" title="Watch video"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>`
+      ? `\n      <a href="${escapeHtml(member.video)}" target="_blank" rel="noopener" class="video-link" aria-label="Watch ${escapeHtml(member.name)} video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>`
       : '';
 
     return `    <article class="member-card${member.video ? ' has-video' : ''}">
@@ -112,6 +112,16 @@ html {
   scroll-padding-top: 80px;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--bg-dark);
@@ -126,6 +136,33 @@ a {
 
 a:hover {
   color: var(--accent-light);
+}
+
+/* Focus styles */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: #000;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  z-index: 1000;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 1rem;
 }
 
 /* Header */
@@ -164,7 +201,7 @@ a:hover {
   display: inline-block;
   padding: 0.75rem 1.5rem;
   background: var(--accent);
-  color: #fff;
+  color: #000;
   border-radius: 4px;
   font-weight: 600;
   margin-top: 1rem;
@@ -172,7 +209,7 @@ a:hover {
 }
 
 .btn:hover {
-  color: #fff;
+  color: #000;
   transform: translateY(-2px);
   box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
 }
@@ -298,8 +335,19 @@ a:hover {
 }
 
 .search-box:focus {
-  outline: none;
   border-color: var(--accent);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .search-info {
@@ -423,7 +471,7 @@ a:hover {
 .video-link svg {
   width: 16px;
   height: 16px;
-  fill: #fff;
+  fill: #000;
   margin-left: 2px;
 }
 
@@ -460,6 +508,8 @@ a:hover {
 </head>
 <body>
 
+<a href="#members" class="skip-link">Skip to members</a>
+
 <header class="site-header">
   <h1 class="site-title">Big Add<strong>Posse</strong></h1>
   <p class="site-description">The Big ADD Posse (BAP) are a group of skilled freestyle footbag players who have contributed to the progression of that sport in a unique way. The group is invite-only, and the only way to get an invitation is to shred hard in front of other members and prove your style.</p>
@@ -467,17 +517,18 @@ a:hover {
   <p class="member-count">There are <strong>${members.length}</strong> members of BAP</p>
 </header>
 
-<nav class="timeline-nav" id="timeline-nav">
-  <a href="#" class="top-link" title="Back to top"><svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg></a>
+<nav class="timeline-nav" id="timeline-nav" aria-label="Jump to year">
+  <a href="#" class="top-link" aria-label="Back to top"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg></a>
   <div class="timeline-nav-inner">
 ${timelineLinks}
   </div>
 </nav>
 
 <div class="search-container">
+  <label for="search" class="visually-hidden">Search members by name or nickname</label>
   <input type="text" class="search-box" id="search" placeholder="Search by name or nickname..." autocomplete="off">
 </div>
-<p class="search-info" id="search-info"></p>
+<p class="search-info" id="search-info" aria-live="polite"></p>
 
 <main class="main-content" id="members">
 
