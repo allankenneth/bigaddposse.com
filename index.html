@@ -1560,6 +1560,7 @@ input:focus-visible {
   const sortAsc = document.getElementById('sort-asc');
   const sortDesc = document.getElementById('sort-desc');
   const main = document.getElementById('members');
+  let isDescending = false;
 
   function reverseOrder() {
     // Reverse year sections in the DOM
@@ -1571,21 +1572,42 @@ input:focus-visible {
     linksArray.reverse().forEach(link => navInner.appendChild(link));
   }
 
-  sortAsc.addEventListener('click', function() {
-    if (this.getAttribute('aria-pressed') === 'true') return;
-    this.setAttribute('aria-pressed', 'true');
-    sortDesc.setAttribute('aria-pressed', 'false');
+  function setDescending(desc, updateHash) {
+    if (desc === isDescending) return;
+    isDescending = desc;
+
+    if (desc) {
+      sortDesc.setAttribute('aria-pressed', 'true');
+      sortAsc.setAttribute('aria-pressed', 'false');
+    } else {
+      sortAsc.setAttribute('aria-pressed', 'true');
+      sortDesc.setAttribute('aria-pressed', 'false');
+    }
+
     reverseOrder();
     updateActiveYear();
+
+    if (updateHash) {
+      if (desc) {
+        history.replaceState(null, '', '#newest');
+      } else {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+    }
+  }
+
+  sortAsc.addEventListener('click', function() {
+    setDescending(false, true);
   });
 
   sortDesc.addEventListener('click', function() {
-    if (this.getAttribute('aria-pressed') === 'true') return;
-    this.setAttribute('aria-pressed', 'true');
-    sortAsc.setAttribute('aria-pressed', 'false');
-    reverseOrder();
-    updateActiveYear();
+    setDescending(true, true);
   });
+
+  // Check URL hash on page load
+  if (window.location.hash === '#newest') {
+    setDescending(true, false);
+  }
 })();
 </script>
 
