@@ -694,7 +694,7 @@ input:focus-visible {
     </article>
     <article class="member-card has-video">
       <img src="img/eric-wulff.jpg" alt="Eric Wulff" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=HQgSBNT4Yeo" target="_blank" rel="noopener" class="video-link" aria-label="Watch Eric Wulff video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <a href="https://vimeo.com/197154435" target="_blank" rel="noopener" class="video-link" aria-label="Watch Eric Wulff video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
       <div class="member-info">
         <h3 class="member-name">Eric Wulff</h3>
         <span class="member-nickname">Iron Man</span>
@@ -1560,7 +1560,6 @@ input:focus-visible {
   const sortAsc = document.getElementById('sort-asc');
   const sortDesc = document.getElementById('sort-desc');
   const main = document.getElementById('members');
-  let isDescending = false;
 
   function reverseOrder() {
     // Reverse year sections in the DOM
@@ -1572,42 +1571,21 @@ input:focus-visible {
     linksArray.reverse().forEach(link => navInner.appendChild(link));
   }
 
-  function setDescending(desc, updateHash) {
-    if (desc === isDescending) return;
-    isDescending = desc;
-
-    if (desc) {
-      sortDesc.setAttribute('aria-pressed', 'true');
-      sortAsc.setAttribute('aria-pressed', 'false');
-    } else {
-      sortAsc.setAttribute('aria-pressed', 'true');
-      sortDesc.setAttribute('aria-pressed', 'false');
-    }
-
+  sortAsc.addEventListener('click', function() {
+    if (this.getAttribute('aria-pressed') === 'true') return;
+    this.setAttribute('aria-pressed', 'true');
+    sortDesc.setAttribute('aria-pressed', 'false');
     reverseOrder();
     updateActiveYear();
-
-    if (updateHash) {
-      if (desc) {
-        history.replaceState(null, '', '#newest');
-      } else {
-        history.replaceState(null, '', window.location.pathname + window.location.search);
-      }
-    }
-  }
-
-  sortAsc.addEventListener('click', function() {
-    setDescending(false, true);
   });
 
   sortDesc.addEventListener('click', function() {
-    setDescending(true, true);
+    if (this.getAttribute('aria-pressed') === 'true') return;
+    this.setAttribute('aria-pressed', 'true');
+    sortAsc.setAttribute('aria-pressed', 'false');
+    reverseOrder();
+    updateActiveYear();
   });
-
-  // Check URL hash on page load
-  if (window.location.hash === '#newest') {
-    setDescending(true, false);
-  }
 })();
 </script>
 
