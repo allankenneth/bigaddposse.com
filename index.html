@@ -405,6 +405,12 @@ input:focus-visible {
 
 .member-card.has-video {
   position: relative;
+  cursor: pointer;
+}
+
+.member-card.has-video:focus-visible {
+  outline: 3px solid var(--accent-light);
+  outline-offset: 4px;
 }
 
 .member-card:hover {
@@ -466,6 +472,62 @@ input:focus-visible {
   height: 16px;
   fill: #000;
   margin-left: 2px;
+}
+
+/* Video modal */
+.video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 3rem);
+  background: rgba(4, 5, 12, 0.88);
+  backdrop-filter: blur(8px);
+}
+
+.video-modal.is-open {
+  display: flex;
+}
+
+.video-modal-content {
+  position: relative;
+  width: min(100%, 1100px);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid rgba(102, 229, 255, 0.35);
+  border-radius: 16px;
+  background: #000;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
+}
+
+.video-modal iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.video-modal-close {
+  position: absolute;
+  z-index: 1;
+  top: 0.65rem;
+  right: 0.65rem;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.75);
+  font: 400 2rem/1 sans-serif;
+  cursor: pointer;
+}
+
+.video-modal-close:hover,
+.video-modal-close:focus-visible {
+  color: #000;
+  background: var(--accent-light);
+  outline: none;
 }
 
 /* Memorial badge */
@@ -625,26 +687,26 @@ input:focus-visible {
 <section class="year-section" id="y1992">
   <header class="year-header"><h2 class="year-title">1992</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=gXdt0wGXcWo" tabindex="0" role="button" aria-label="Watch Kenny Shults video">
       <img src="img/ken-shults.jpg" alt="Kenny Shults" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=gXdt0wGXcWo" target="_blank" rel="noopener" class="video-link" aria-label="Watch Kenny Shults video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Kenny Shults</h3>
         <span class="member-nickname">The Enforcer</span>
       </div>
     </article>
-    <article class="member-card has-video memorial">
+    <article class="member-card has-video memorial" data-video-url="https://vimeo.com/472505541" tabindex="0" role="button" aria-label="Watch Rick Reese video">
       <img src="img/richard-reese.jpg" alt="Rick Reese" loading="lazy">
-      <a href="https://vimeo.com/472505541" target="_blank" rel="noopener" class="video-link" aria-label="Watch Rick Reese video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <span class="memorial-badge" aria-label="In memoriam" data-tooltip="In memoriam"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c-1 2-3 4-3 6.5 0 2.5 1.5 4.5 3 4.5s3-2 3-4.5C15 6 13 4 12 2z"/><rect x="11" y="13" width="2" height="9" rx="1"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Rick Reese</h3>
         <span class="member-nickname">Rippin'</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=m_ZxDmqaVxc" tabindex="0" role="button" aria-label="Watch Peter Irish video">
       <img src="img/peter-irish.jpg" alt="Peter Irish" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=m_ZxDmqaVxc" target="_blank" rel="noopener" class="video-link" aria-label="Watch Peter Irish video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Peter Irish</h3>
         <span class="member-nickname">The Executioner</span>
@@ -664,9 +726,9 @@ input:focus-visible {
         <span class="member-nickname">D-Money</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=q37vo62psGA" tabindex="0" role="button" aria-label="Watch Tim Kelley video">
       <img src="img/tim-kelly.jpg" alt="Tim Kelley" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=q37vo62psGA" target="_blank" rel="noopener" class="video-link" aria-label="Watch Tim Kelley video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Tim Kelley</h3>
         <span class="member-nickname">Stikman</span>
@@ -685,33 +747,33 @@ input:focus-visible {
 <section class="year-section" id="y1995">
   <header class="year-header"><h2 class="year-title">1995</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=nisxR0eIZ9E" tabindex="0" role="button" aria-label="Watch Tuan Vu video">
       <img src="img/tuan-vu.jpg" alt="Tuan Vu" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=nisxR0eIZ9E" target="_blank" rel="noopener" class="video-link" aria-label="Watch Tuan Vu video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Tuan Vu</h3>
         <span class="member-nickname">Disco Ninja</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://vimeo.com/197154435" tabindex="0" role="button" aria-label="Watch Eric Wulff video">
       <img src="img/eric-wulff.jpg" alt="Eric Wulff" loading="lazy">
-      <a href="https://vimeo.com/197154435" target="_blank" rel="noopener" class="video-link" aria-label="Watch Eric Wulff video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Eric Wulff</h3>
         <span class="member-nickname">Iron Man</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=zMenKdZ-qi4" tabindex="0" role="button" aria-label="Watch Scott Davidson video">
       <img src="img/scott-davidson.jpg" alt="Scott Davidson" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=zMenKdZ-qi4" target="_blank" rel="noopener" class="video-link" aria-label="Watch Scott Davidson video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Scott Davidson</h3>
         <span class="member-nickname">Enlightener</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=1e3GS17JB-U" tabindex="0" role="button" aria-label="Watch Greg Nelson video">
       <img src="img/greg-nelson.jpg" alt="Greg Nelson" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=1e3GS17JB-U" target="_blank" rel="noopener" class="video-link" aria-label="Watch Greg Nelson video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Greg Nelson</h3>
         <span class="member-nickname">GF Smoothie</span>
@@ -724,17 +786,17 @@ input:focus-visible {
         <span class="member-nickname">Kosmo</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=63cgWLJYTNI" tabindex="0" role="button" aria-label="Watch Josh Casey video">
       <img src="img/josh-casey.jpg" alt="Josh Casey" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=63cgWLJYTNI" target="_blank" rel="noopener" class="video-link" aria-label="Watch Josh Casey video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Josh Casey</h3>
         <span class="member-nickname">Chiseler</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=xMpJ_WelGDY" tabindex="0" role="button" aria-label="Watch Paul Munger video">
       <img src="img/paul-munger.jpg" alt="Paul Munger" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=xMpJ_WelGDY" target="_blank" rel="noopener" class="video-link" aria-label="Watch Paul Munger video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Paul Munger</h3>
         <span class="member-nickname">Hu-Mongous</span>
@@ -746,17 +808,17 @@ input:focus-visible {
 <section class="year-section" id="y1996">
   <header class="year-header"><h2 class="year-title">1996</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://vimeo.com/198106959" tabindex="0" role="button" aria-label="Watch Daryl Genz video">
       <img src="img/daryl-genz.jpg" alt="Daryl Genz" loading="lazy">
-      <a href="https://vimeo.com/198106959" target="_blank" rel="noopener" class="video-link" aria-label="Watch Daryl Genz video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Daryl Genz</h3>
         <span class="member-nickname">Genzu Blades</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=3DauF8s7dZY" tabindex="0" role="button" aria-label="Watch Ahren Gehrman video">
       <img src="img/ahren-gehrman.jpg" alt="Ahren Gehrman" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=3DauF8s7dZY" target="_blank" rel="noopener" class="video-link" aria-label="Watch Ahren Gehrman video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Ahren Gehrman</h3>
         <span class="member-nickname">Torch</span>
@@ -768,49 +830,49 @@ input:focus-visible {
 <section class="year-section" id="y1997">
   <header class="year-header"><h2 class="year-title">1997</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=t4l-X0SFMJ8" tabindex="0" role="button" aria-label="Watch Ryan Mulroney video">
       <img src="img/ryan-mulroney.jpg" alt="Ryan Mulroney" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=t4l-X0SFMJ8" target="_blank" rel="noopener" class="video-link" aria-label="Watch Ryan Mulroney video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Ryan Mulroney</h3>
         <span class="member-nickname">Regulator</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=YCQ5RLeLPu4" tabindex="0" role="button" aria-label="Watch Red Husted video">
       <img src="img/red-husted.jpg" alt="Red Husted" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=YCQ5RLeLPu4" target="_blank" rel="noopener" class="video-link" aria-label="Watch Red Husted video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Red Husted</h3>
         <span class="member-nickname">Shred</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=U_yKAXALgVw" tabindex="0" role="button" aria-label="Watch Tu Vu video">
       <img src="img/tu-vu.jpg" alt="Tu Vu" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=U_yKAXALgVw" target="_blank" rel="noopener" class="video-link" aria-label="Watch Tu Vu video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Tu Vu</h3>
         <span class="member-nickname">Huge</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=y14ZxGaMi2o" tabindex="0" role="button" aria-label="Watch Chad Devlahovich video">
       <img src="img/chad-devlahovich.jpg" alt="Chad Devlahovich" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=y14ZxGaMi2o" target="_blank" rel="noopener" class="video-link" aria-label="Watch Chad Devlahovich video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Chad Devlahovich</h3>
         <span class="member-nickname">Big Add</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=CNpOh_KJJe4" tabindex="0" role="button" aria-label="Watch Noah Dubreuil video">
       <img src="img/profile.jpg" alt="Noah Dubreuil" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=CNpOh_KJJe4" target="_blank" rel="noopener" class="video-link" aria-label="Watch Noah Dubreuil video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Noah Dubreuil</h3>
         <span class="member-nickname">Merlin</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=gBeuu7tDaR4" tabindex="0" role="button" aria-label="Watch Dave Holton video">
       <img src="img/dave-holton.jpg" alt="Dave Holton" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=gBeuu7tDaR4" target="_blank" rel="noopener" class="video-link" aria-label="Watch Dave Holton video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Dave Holton</h3>
         <span class="member-nickname">Highlander</span>
@@ -822,33 +884,33 @@ input:focus-visible {
 <section class="year-section" id="y1998">
   <header class="year-header"><h2 class="year-title">1998</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=rFxxDBTSsm8" tabindex="0" role="button" aria-label="Watch Brian McKenzie video">
       <img src="img/brian-mckenzie.jpg" alt="Brian McKenzie" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=rFxxDBTSsm8" target="_blank" rel="noopener" class="video-link" aria-label="Watch Brian McKenzie video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Brian McKenzie</h3>
         <span class="member-nickname">Kamakenzie</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=mh8ASGrAfC0" tabindex="0" role="button" aria-label="Watch Eric Windsor video">
       <img src="img/eric-windsor.jpg" alt="Eric Windsor" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=mh8ASGrAfC0" target="_blank" rel="noopener" class="video-link" aria-label="Watch Eric Windsor video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Eric Windsor</h3>
         <span class="member-nickname">Wicked</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=NxLcAq6xEz0" tabindex="0" role="button" aria-label="Watch Carol Wedemeyer video">
       <img src="img/carol-wedemeyer.jpg" alt="Carol Wedemeyer" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=NxLcAq6xEz0" target="_blank" rel="noopener" class="video-link" aria-label="Watch Carol Wedemeyer video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Carol Wedemeyer</h3>
         <span class="member-nickname">She blade</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=LHQrW6mNCuY" tabindex="0" role="button" aria-label="Watch Eli Piltz video">
       <img src="img/eliot-piltz.jpg" alt="Eli Piltz" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=LHQrW6mNCuY" target="_blank" rel="noopener" class="video-link" aria-label="Watch Eli Piltz video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Eli Piltz</h3>
         <span class="member-nickname">Intergalactic</span>
@@ -867,17 +929,17 @@ input:focus-visible {
 <section class="year-section" id="y1999">
   <header class="year-header"><h2 class="year-title">1999</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=PPmWoRNz7yQ" tabindex="0" role="button" aria-label="Watch Sunil Jani video">
       <img src="img/sunil-jani.jpg" alt="Sunil Jani" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=PPmWoRNz7yQ" target="_blank" rel="noopener" class="video-link" aria-label="Watch Sunil Jani video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Sunil Jani</h3>
         <span class="member-nickname">Tsunami</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=wlfrnErbaGI" tabindex="0" role="button" aria-label="Watch Mika Koistinen video">
       <img src="img/profile.jpg" alt="Mika Koistinen" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=wlfrnErbaGI" target="_blank" rel="noopener" class="video-link" aria-label="Watch Mika Koistinen video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Mika Koistinen</h3>
         <span class="member-nickname">Iceman</span>
@@ -896,17 +958,17 @@ input:focus-visible {
         <span class="member-nickname">One</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=A6kCUKwLUuM" tabindex="0" role="button" aria-label="Watch Jonathan Schneider video">
       <img src="img/jon-schneider.jpg" alt="Jonathan Schneider" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=A6kCUKwLUuM" target="_blank" rel="noopener" class="video-link" aria-label="Watch Jonathan Schneider video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Jonathan Schneider</h3>
         <span class="member-nickname">Outsider</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=dk2PEKRKYMU" tabindex="0" role="button" aria-label="Watch Lon Smith video">
       <img src="img/lon-smith.jpg" alt="Lon Smith" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=dk2PEKRKYMU" target="_blank" rel="noopener" class="video-link" aria-label="Watch Lon Smith video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Lon Smith</h3>
         <span class="member-nickname">Shred On</span>
@@ -918,41 +980,41 @@ input:focus-visible {
 <section class="year-section" id="y2001">
   <header class="year-header"><h2 class="year-title">2001</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://vimeo.com/158856059" tabindex="0" role="button" aria-label="Watch Allan Haggett video">
       <img src="img/allan-haggett-5ft-superfly-worlds-2001.jpg" alt="Allan Haggett" loading="lazy">
-      <a href="https://vimeo.com/158856059" target="_blank" rel="noopener" class="video-link" aria-label="Watch Allan Haggett video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Allan Haggett</h3>
         <span class="member-nickname">Allan</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=7KJA-1hee48" tabindex="0" role="button" aria-label="Watch Yacine Merzouk video">
       <img src="img/yacine_merzouk.jpg" alt="Yacine Merzouk" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=7KJA-1hee48" target="_blank" rel="noopener" class="video-link" aria-label="Watch Yacine Merzouk video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Yacine Merzouk</h3>
         <span class="member-nickname">Fiend</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=dOLh7EJdfMY" tabindex="0" role="button" aria-label="Watch Richie Abshire video">
       <img src="img/richard-abshire.jpg" alt="Richie Abshire" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=dOLh7EJdfMY" target="_blank" rel="noopener" class="video-link" aria-label="Watch Richie Abshire video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Richie Abshire</h3>
         <span class="member-nickname">Renegade</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=ORfTSfIFrXw" tabindex="0" role="button" aria-label="Watch Sebastien Duschesne video">
       <img src="img/sebastien_duschesne.jpg" alt="Sebastien Duschesne" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=ORfTSfIFrXw" target="_blank" rel="noopener" class="video-link" aria-label="Watch Sebastien Duschesne video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Sebastien Duschesne</h3>
         <span class="member-nickname">Hurricane</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=cLc9enanEyI" tabindex="0" role="button" aria-label="Watch Gordon Scott Bevier video">
       <img src="img/gordon_bevier.jpg" alt="Gordon Scott Bevier" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=cLc9enanEyI" target="_blank" rel="noopener" class="video-link" aria-label="Watch Gordon Scott Bevier video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Gordon Scott Bevier</h3>
         <span class="member-nickname">Flash</span>
@@ -964,25 +1026,25 @@ input:focus-visible {
 <section class="year-section" id="y2002">
   <header class="year-header"><h2 class="year-title">2002</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=20lOET6K5dE" tabindex="0" role="button" aria-label="Watch Honza Weber video">
       <img src="img/honza_weber.jpg" alt="Honza Weber" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=20lOET6K5dE" target="_blank" rel="noopener" class="video-link" aria-label="Watch Honza Weber video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Honza Weber</h3>
         <span class="member-nickname">Webslinger</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=I0RwwiMkPxE" tabindex="0" role="button" aria-label="Watch Ales Zelinka video">
       <img src="img/ales_zelinka.jpg" alt="Ales Zelinka" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=I0RwwiMkPxE" target="_blank" rel="noopener" class="video-link" aria-label="Watch Ales Zelinka video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Ales Zelinka</h3>
         <span class="member-nickname">The Man of Steel</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=lr46ug-5WS8" tabindex="0" role="button" aria-label="Watch Jim Penske video">
       <img src="img/jim_penske.jpg" alt="Jim Penske" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=lr46ug-5WS8" target="_blank" rel="noopener" class="video-link" aria-label="Watch Jim Penske video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Jim Penske</h3>
         <span class="member-nickname">Pimpske</span>
@@ -995,9 +1057,9 @@ input:focus-visible {
         <span class="member-nickname">Blackjack</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://myspace.com/footbagnic/video/vasek-klouda-king-of-footbag/3136878" tabindex="0" role="button" aria-label="Watch Vaclav (Vasek) Klouda video">
       <img src="img/vasek_klouda.jpg" alt="Vaclav (Vasek) Klouda" loading="lazy">
-      <a href="https://myspace.com/footbagnic/video/vasek-klouda-king-of-footbag/3136878" target="_blank" rel="noopener" class="video-link" aria-label="Watch Vaclav (Vasek) Klouda video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Vaclav (Vasek) Klouda</h3>
         <span class="member-nickname">Super Glue</span>
@@ -1009,33 +1071,33 @@ input:focus-visible {
 <section class="year-section" id="y2003">
   <header class="year-header"><h2 class="year-title">2003</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=2fqFlHaths4" tabindex="0" role="button" aria-label="Watch Jere Vainikka video">
       <img src="img/jere_vainikka.jpg" alt="Jere Vainikka" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=2fqFlHaths4" target="_blank" rel="noopener" class="video-link" aria-label="Watch Jere Vainikka video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Jere Vainikka</h3>
         <span class="member-nickname">Smooth Criminal</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=zYGDIpUmq4c" tabindex="0" role="button" aria-label="Watch Yves Kreil video">
       <img src="img/yves_kreil.jpg" alt="Yves Kreil" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=zYGDIpUmq4c" target="_blank" rel="noopener" class="video-link" aria-label="Watch Yves Kreil video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Yves Kreil</h3>
         <span class="member-nickname">Krusher</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=InY3SLWORj8" tabindex="0" role="button" aria-label="Watch Felix Zenger video">
       <img src="img/felix_zenger.jpg" alt="Felix Zenger" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=InY3SLWORj8" target="_blank" rel="noopener" class="video-link" aria-label="Watch Felix Zenger video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Felix Zenger</h3>
         <span class="member-nickname">Stone Cold</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=vhh7Mf4mKTk" tabindex="0" role="button" aria-label="Watch Tuukka Antikainen video">
       <img src="img/tuukka-antikainen.jpg" alt="Tuukka Antikainen" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=vhh7Mf4mKTk" target="_blank" rel="noopener" class="video-link" aria-label="Watch Tuukka Antikainen video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Tuukka Antikainen</h3>
         <span class="member-nickname">Tko</span>
@@ -1047,56 +1109,56 @@ input:focus-visible {
 <section class="year-section" id="y2004">
   <header class="year-header"><h2 class="year-title">2004</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=b-BjxwUbX7M" tabindex="0" role="button" aria-label="Watch Dylan Fry video">
       <img src="img/dylan_fry.jpg" alt="Dylan Fry" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=b-BjxwUbX7M" target="_blank" rel="noopener" class="video-link" aria-label="Watch Dylan Fry video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Dylan Fry</h3>
         <span class="member-nickname">Stylon Dylon</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=xbkIoVgvL04" tabindex="0" role="button" aria-label="Watch Nick Laroche video">
       <img src="img/nick_laroche.jpg" alt="Nick Laroche" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=xbkIoVgvL04" target="_blank" rel="noopener" class="video-link" aria-label="Watch Nick Laroche video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Nick Laroche</h3>
         <span class="member-nickname">Slick Nick</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=W4OF2w2M5EY" tabindex="0" role="button" aria-label="Watch Johnny Murphy video">
       <img src="img/johnny-murphy.jpg" alt="Johnny Murphy" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=W4OF2w2M5EY" target="_blank" rel="noopener" class="video-link" aria-label="Watch Johnny Murphy video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Johnny Murphy</h3>
         <span class="member-nickname">Magic Feet (J$)</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=L7a-hXbRyYQ" tabindex="0" role="button" aria-label="Watch Jorden Moir video">
       <img src="img/jorden_moir.jpg" alt="Jorden Moir" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=L7a-hXbRyYQ" target="_blank" rel="noopener" class="video-link" aria-label="Watch Jorden Moir video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Jorden Moir</h3>
         <span class="member-nickname">The Destroyer</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=ZReIbvilDbE" tabindex="0" role="button" aria-label="Watch Lasse Salmenhaara video">
       <img src="img/lasse-salmenhaara.jpg" alt="Lasse Salmenhaara" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=ZReIbvilDbE" target="_blank" rel="noopener" class="video-link" aria-label="Watch Lasse Salmenhaara video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Lasse Salmenhaara</h3>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=ZReIbvilDbE" tabindex="0" role="button" aria-label="Watch Jere Linnanen video">
       <img src="img/jere_linnanen.jpg" alt="Jere Linnanen" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=ZReIbvilDbE" target="_blank" rel="noopener" class="video-link" aria-label="Watch Jere Linnanen video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Jere Linnanen</h3>
         <span class="member-nickname">Scary</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=6ZmmwTt2up4" tabindex="0" role="button" aria-label="Watch Toni Paakkonen video">
       <img src="img/toni-paakkonen.jpg" alt="Toni Paakkonen" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=6ZmmwTt2up4" target="_blank" rel="noopener" class="video-link" aria-label="Watch Toni Paakkonen video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Toni Paakkonen</h3>
         <span class="member-nickname">The Beast</span>
@@ -1108,25 +1170,25 @@ input:focus-visible {
 <section class="year-section" id="y2005">
   <header class="year-header"><h2 class="year-title">2005</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=-KHP-qdg0UA" tabindex="0" role="button" aria-label="Watch Juho Marjo video">
       <img src="img/juho_marjo.jpg" alt="Juho Marjo" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=-KHP-qdg0UA" target="_blank" rel="noopener" class="video-link" aria-label="Watch Juho Marjo video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Juho Marjo</h3>
         <span class="member-nickname">Super</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=vlcWEigrzFw" tabindex="0" role="button" aria-label="Watch Mikko Lepisto video">
       <img src="img/mikko_lepisto.jpg" alt="Mikko Lepisto" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=vlcWEigrzFw" target="_blank" rel="noopener" class="video-link" aria-label="Watch Mikko Lepisto video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Mikko Lepisto</h3>
         <span class="member-nickname">Uniqueo</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=upg0renncwU" tabindex="0" role="button" aria-label="Watch Karim Daouk video">
       <img src="img/karim_daouk.jpg" alt="Karim Daouk" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=upg0renncwU" target="_blank" rel="noopener" class="video-link" aria-label="Watch Karim Daouk video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Karim Daouk</h3>
         <span class="member-nickname">Special K</span>
@@ -1138,25 +1200,25 @@ input:focus-visible {
 <section class="year-section" id="y2006">
   <header class="year-header"><h2 class="year-title">2006</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=wgQEPbdqQdM" tabindex="0" role="button" aria-label="Watch Phillip Morrison video">
       <img src="img/phil_morrison.jpg" alt="Phillip Morrison" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=wgQEPbdqQdM" target="_blank" rel="noopener" class="video-link" aria-label="Watch Phillip Morrison video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Phillip Morrison</h3>
         <span class="member-nickname">Red Rocket</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=1Pr_IFINrNU" tabindex="0" role="button" aria-label="Watch Aleksi Airinen video">
       <img src="img/aleksi_airinen.jpg" alt="Aleksi Airinen" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=1Pr_IFINrNU" target="_blank" rel="noopener" class="video-link" aria-label="Watch Aleksi Airinen video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Aleksi Airinen</h3>
         <span class="member-nickname">Air</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=pwqMxZ9apkU" tabindex="0" role="button" aria-label="Watch Tina Aberli video">
       <img src="img/tina_aeberli.jpg" alt="Tina Aberli" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=pwqMxZ9apkU" target="_blank" rel="noopener" class="video-link" aria-label="Watch Tina Aberli video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Tina Aberli</h3>
         <span class="member-nickname">Swiss Miss</span>
@@ -1168,33 +1230,33 @@ input:focus-visible {
 <section class="year-section" id="y2007">
   <header class="year-header"><h2 class="year-title">2007</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=Q1PAlpdRPk4" tabindex="0" role="button" aria-label="Watch Damian Gielnicki video">
       <img src="img/damian_gielnicki.jpg" alt="Damian Gielnicki" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=Q1PAlpdRPk4" target="_blank" rel="noopener" class="video-link" aria-label="Watch Damian Gielnicki video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Damian Gielnicki</h3>
         <span class="member-nickname">Twister</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.dailymotion.com/video/x57uyi" tabindex="0" role="button" aria-label="Watch Sergey Kozlov video">
       <img src="img/sergey_kozlov.jpg" alt="Sergey Kozlov" loading="lazy">
-      <a href="https://www.dailymotion.com/video/x57uyi" target="_blank" rel="noopener" class="video-link" aria-label="Watch Sergey Kozlov video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Sergey Kozlov</h3>
         <span class="member-nickname">Kalashnikov</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.dailymotion.com/video/xdex47" tabindex="0" role="button" aria-label="Watch Serge Kaldany video">
       <img src="img/serge_kaldany.jpg" alt="Serge Kaldany" loading="lazy">
-      <a href="https://www.dailymotion.com/video/xdex47" target="_blank" rel="noopener" class="video-link" aria-label="Watch Serge Kaldany video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Serge Kaldany</h3>
         <span class="member-nickname">Cerberus</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=SF91AqS_Iyg" tabindex="0" role="button" aria-label="Watch David Clavens video">
       <img src="img/david_clavens.jpg" alt="David Clavens" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=SF91AqS_Iyg" target="_blank" rel="noopener" class="video-link" aria-label="Watch David Clavens video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">David Clavens</h3>
         <span class="member-nickname">Cleaver</span>
@@ -1206,9 +1268,9 @@ input:focus-visible {
 <section class="year-section" id="y2008">
   <header class="year-header"><h2 class="year-title">2008</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=v6VdTmLw7VM" tabindex="0" role="button" aria-label="Watch Arek Dzudzinski video">
       <img src="img/profile.jpg" alt="Arek Dzudzinski" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=v6VdTmLw7VM" target="_blank" rel="noopener" class="video-link" aria-label="Watch Arek Dzudzinski video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Arek Dzudzinski</h3>
         <span class="member-nickname">Hi-Tek</span>
@@ -1220,25 +1282,25 @@ input:focus-visible {
 <section class="year-section" id="y2009">
   <header class="year-header"><h2 class="year-title">2009</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=_2bPJnNLJNE" tabindex="0" role="button" aria-label="Watch Nick Landes video">
       <img src="img/nick_landes.jpg" alt="Nick Landes" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=_2bPJnNLJNE" target="_blank" rel="noopener" class="video-link" aria-label="Watch Nick Landes video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Nick Landes</h3>
         <span class="member-nickname">The Praying Mantis</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=ORrnOcnFk_4" tabindex="0" role="button" aria-label="Watch Anssi Sundberg video">
       <img src="img/anssi_sundberg.jpg" alt="Anssi Sundberg" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=ORrnOcnFk_4" target="_blank" rel="noopener" class="video-link" aria-label="Watch Anssi Sundberg video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Anssi Sundberg</h3>
         <span class="member-nickname">Accelerator</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://vimeo.com/143522157" tabindex="0" role="button" aria-label="Watch Milan Benda video">
       <img src="img/milan_benda.jpg" alt="Milan Benda" loading="lazy">
-      <a href="https://vimeo.com/143522157" target="_blank" rel="noopener" class="video-link" aria-label="Watch Milan Benda video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Milan Benda</h3>
         <span class="member-nickname">Megatron</span>
@@ -1250,9 +1312,9 @@ input:focus-visible {
 <section class="year-section" id="y2010">
   <header class="year-header"><h2 class="year-title">2010</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=aUi_CIjNzYQ" tabindex="0" role="button" aria-label="Watch Evan Gatesman video">
       <img src="img/evan-gatesman.jpg" alt="Evan Gatesman" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=aUi_CIjNzYQ" target="_blank" rel="noopener" class="video-link" aria-label="Watch Evan Gatesman video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Evan Gatesman</h3>
         <span class="member-nickname">Silencer</span>
@@ -1264,17 +1326,17 @@ input:focus-visible {
 <section class="year-section" id="y2011">
   <header class="year-header"><h2 class="year-title">2011</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=YTHE_VFUm5A" tabindex="0" role="button" aria-label="Watch Olav Piwowar video">
       <img src="img/olav_piwowar.jpg" alt="Olav Piwowar" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=YTHE_VFUm5A" target="_blank" rel="noopener" class="video-link" aria-label="Watch Olav Piwowar video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Olav Piwowar</h3>
         <span class="member-nickname">Anaconda</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=joH8OuncFrU" tabindex="0" role="button" aria-label="Watch Jay Boychuk video">
       <img src="img/jay_boychuk.jpg" alt="Jay Boychuk" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=joH8OuncFrU" target="_blank" rel="noopener" class="video-link" aria-label="Watch Jay Boychuk video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Jay Boychuk</h3>
         <span class="member-nickname">(the) Creator</span>
@@ -1286,17 +1348,17 @@ input:focus-visible {
 <section class="year-section" id="y2012">
   <header class="year-header"><h2 class="year-title">2012</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=31Y7U3NgsEc" tabindex="0" role="button" aria-label="Watch Marcin Bujko video">
       <img src="img/marcin_bujko.jpg" alt="Marcin Bujko" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=31Y7U3NgsEc" target="_blank" rel="noopener" class="video-link" aria-label="Watch Marcin Bujko video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Marcin Bujko</h3>
         <span class="member-nickname">Stylish</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=21h1CQalhkI" tabindex="0" role="button" aria-label="Watch Lauri Airinen video">
       <img src="img/lauri_airinen.jpg" alt="Lauri Airinen" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=21h1CQalhkI" target="_blank" rel="noopener" class="video-link" aria-label="Watch Lauri Airinen video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Lauri Airinen</h3>
         <span class="member-nickname">Madness</span>
@@ -1308,26 +1370,26 @@ input:focus-visible {
 <section class="year-section" id="y2013">
   <header class="year-header"><h2 class="year-title">2013</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video memorial">
+    <article class="member-card has-video memorial" data-video-url="https://www.youtube.com/watch?v=CJWN4DNGVAw" tabindex="0" role="button" aria-label="Watch Jindra Smola video">
       <img src="img/jindra_smola.jpg" alt="Jindra Smola" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=CJWN4DNGVAw" target="_blank" rel="noopener" class="video-link" aria-label="Watch Jindra Smola video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <span class="memorial-badge" aria-label="In memoriam" data-tooltip="In memoriam"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c-1 2-3 4-3 6.5 0 2.5 1.5 4.5 3 4.5s3-2 3-4.5C15 6 13 4 12 2z"/><rect x="11" y="13" width="2" height="9" rx="1"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Jindra Smola</h3>
         <span class="member-nickname">FootZepp</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=5jd1sFrbDEI" tabindex="0" role="button" aria-label="Watch Rene Ruhr video">
       <img src="img/rene_ruhr.jpg" alt="Rene Ruhr" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=5jd1sFrbDEI" target="_blank" rel="noopener" class="video-link" aria-label="Watch Rene Ruhr video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Rene Ruhr</h3>
         <span class="member-nickname">Collider</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=kp3Tx9PHm88" tabindex="0" role="button" aria-label="Watch Johnny Suderman video">
       <img src="img/johnnysuderman.jpg" alt="Johnny Suderman" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=kp3Tx9PHm88" target="_blank" rel="noopener" class="video-link" aria-label="Watch Johnny Suderman video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Johnny Suderman</h3>
         <span class="member-nickname">The Canadian Hero</span>
@@ -1339,9 +1401,9 @@ input:focus-visible {
 <section class="year-section" id="y2014">
   <header class="year-header"><h2 class="year-title">2014</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=Sif2ZYf2Zqw" tabindex="0" role="button" aria-label="Watch Mathias Blau video">
       <img src="img/mathias-blau.jpg" alt="Mathias Blau" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=Sif2ZYf2Zqw" target="_blank" rel="noopener" class="video-link" aria-label="Watch Mathias Blau video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Mathias Blau</h3>
         <span class="member-nickname">The Matrix</span>
@@ -1353,9 +1415,9 @@ input:focus-visible {
 <section class="year-section" id="y2017">
   <header class="year-header"><h2 class="year-title">2017</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://youtu.be/xp4YjZP-DUk" tabindex="0" role="button" aria-label="Watch Nick Polini video">
       <img src="img/nick-houdini-polini.jpg" alt="Nick Polini" loading="lazy">
-      <a href="https://youtu.be/xp4YjZP-DUk" target="_blank" rel="noopener" class="video-link" aria-label="Watch Nick Polini video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Nick Polini</h3>
         <span class="member-nickname">Houdini</span>
@@ -1367,17 +1429,17 @@ input:focus-visible {
 <section class="year-section" id="y2018">
   <header class="year-header"><h2 class="year-title">2018</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=XSrNYGpugxU" tabindex="0" role="button" aria-label="Watch Dominik Šimků video">
       <img src="img/13439228_1090331857677433_4827374749964852323_n.jpg" alt="Dominik Šimků" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=XSrNYGpugxU" target="_blank" rel="noopener" class="video-link" aria-label="Watch Dominik Šimků video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Dominik Šimků</h3>
         <span class="member-nickname">Nunchaku</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=XUThE6cZKVU" tabindex="0" role="button" aria-label="Watch Taishi Ishida video">
       <img src="img/37241395_10156116269430971_8424582865114628096_n.jpg" alt="Taishi Ishida" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=XUThE6cZKVU" target="_blank" rel="noopener" class="video-link" aria-label="Watch Taishi Ishida video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Taishi Ishida</h3>
         <span class="member-nickname">Shuriken</span>
@@ -1389,9 +1451,9 @@ input:focus-visible {
 <section class="year-section" id="y2020">
   <header class="year-header"><h2 class="year-title">2020</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=_CeQUdG1MqM" tabindex="0" role="button" aria-label="Watch Rafał Kaleta video">
       <img src="img/rafal-kaleta.jpg" alt="Rafał Kaleta" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=_CeQUdG1MqM" target="_blank" rel="noopener" class="video-link" aria-label="Watch Rafał Kaleta video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Rafał Kaleta</h3>
         <span class="member-nickname">Killa</span>
@@ -1403,17 +1465,17 @@ input:focus-visible {
 <section class="year-section" id="y2021">
   <header class="year-header"><h2 class="year-title">2021</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=QrLcGB4JKwY" tabindex="0" role="button" aria-label="Watch Christopher Schillem video">
       <img src="img/christopher-schillem.jpg" alt="Christopher Schillem" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=QrLcGB4JKwY" target="_blank" rel="noopener" class="video-link" aria-label="Watch Christopher Schillem video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Christopher Schillem</h3>
         <span class="member-nickname">The Machine</span>
       </div>
     </article>
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=JSUsWB_7Huc" tabindex="0" role="button" aria-label="Watch Pawel Nowak video">
       <img src="img/pawel-nowak.jpg" alt="Pawel Nowak" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=JSUsWB_7Huc" target="_blank" rel="noopener" class="video-link" aria-label="Watch Pawel Nowak video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Pawel Nowak</h3>
         <span class="member-nickname">Dynomite</span>
@@ -1425,9 +1487,9 @@ input:focus-visible {
 <section class="year-section" id="y2024">
   <header class="year-header"><h2 class="year-title">2024</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=qrf1eiZmUDs" tabindex="0" role="button" aria-label="Watch Dante Diotallevi video">
       <img src="img/dante-diotallevi.jpg" alt="Dante Diotallevi" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=qrf1eiZmUDs" target="_blank" rel="noopener" class="video-link" aria-label="Watch Dante Diotallevi video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Dante Diotallevi</h3>
         <span class="member-nickname">The Inferno</span>
@@ -1439,9 +1501,9 @@ input:focus-visible {
 <section class="year-section" id="y2025">
   <header class="year-header"><h2 class="year-title">2025</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://youtu.be/v0aCWgd8Nx8" tabindex="0" role="button" aria-label="Watch Jakub Mościszewski video">
       <img src="img/jakub-mosciszewski.jpg" alt="Jakub Mościszewski" loading="lazy">
-      <a href="https://youtu.be/v0aCWgd8Nx8" target="_blank" rel="noopener" class="video-link" aria-label="Watch Jakub Mościszewski video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Jakub Mościszewski</h3>
         <span class="member-nickname">Endurance</span>
@@ -1453,9 +1515,9 @@ input:focus-visible {
 <section class="year-section" id="y2026">
   <header class="year-header"><h2 class="year-title">2026</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video">
+    <article class="member-card has-video" data-video-url="https://www.youtube.com/watch?v=D4ElFXDbSi0" tabindex="0" role="button" aria-label="Watch Derek Littlefield video">
       <img src="img/derek-littlefield.jpg" alt="Derek Littlefield" loading="lazy">
-      <a href="https://www.youtube.com/watch?v=D4ElFXDbSi0" target="_blank" rel="noopener" class="video-link" aria-label="Watch Derek Littlefield video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>
+      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
         <h3 class="member-name">Derek Littlefield</h3>
         <span class="member-nickname">ToeKO</span>
@@ -1465,6 +1527,13 @@ input:focus-visible {
 </section>
 
 </main>
+
+<div class="video-modal" id="video-modal" role="dialog" aria-modal="true" aria-label="Video player" aria-hidden="true">
+  <div class="video-modal-content">
+    <button type="button" class="video-modal-close" id="video-modal-close" aria-label="Close video">&times;</button>
+    <iframe id="video-frame" title="Member video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+  </div>
+</div>
 
 <script>
 (function() {
@@ -1575,6 +1644,7 @@ input:focus-visible {
   const sortAsc = document.getElementById('sort-asc');
   const sortDesc = document.getElementById('sort-desc');
   const main = document.getElementById('members');
+  let newestFirst = false;
 
   function reverseOrder() {
     // Reverse year sections in the DOM
@@ -1586,20 +1656,114 @@ input:focus-visible {
     linksArray.reverse().forEach(link => navInner.appendChild(link));
   }
 
-  sortAsc.addEventListener('click', function() {
-    if (this.getAttribute('aria-pressed') === 'true') return;
-    this.setAttribute('aria-pressed', 'true');
-    sortDesc.setAttribute('aria-pressed', 'false');
-    reverseOrder();
+  function setSortOrder(useNewestFirst, updateUrl) {
+    if (newestFirst !== useNewestFirst) {
+      reverseOrder();
+      newestFirst = useNewestFirst;
+    }
+
+    sortAsc.setAttribute('aria-pressed', String(!newestFirst));
+    sortDesc.setAttribute('aria-pressed', String(newestFirst));
+
+    if (updateUrl) {
+      history.replaceState(null, '', newestFirst ? '#newbies' : '#originators');
+    }
     updateActiveYear();
+  }
+
+  sortAsc.addEventListener('click', function() {
+    setSortOrder(false, true);
   });
 
   sortDesc.addEventListener('click', function() {
-    if (this.getAttribute('aria-pressed') === 'true') return;
-    this.setAttribute('aria-pressed', 'true');
-    sortAsc.setAttribute('aria-pressed', 'false');
-    reverseOrder();
-    updateActiveYear();
+    setSortOrder(true, true);
+  });
+
+  if (window.location.hash === '#newbies') {
+    setSortOrder(true, false);
+  } else if (window.location.hash === '#originators') {
+    setSortOrder(false, false);
+  }
+
+  window.addEventListener('hashchange', function() {
+    if (window.location.hash === '#newbies') setSortOrder(true, false);
+    if (window.location.hash === '#originators') setSortOrder(false, false);
+  });
+
+  // Play member videos in an in-page modal.
+  const videoModal = document.getElementById('video-modal');
+  const videoFrame = document.getElementById('video-frame');
+  const videoClose = document.getElementById('video-modal-close');
+  let videoTrigger = null;
+
+  function getEmbedUrl(videoUrl) {
+    try {
+      const url = new URL(videoUrl);
+      const host = url.hostname.replace(/^www\./, '');
+
+      if (host === 'youtu.be') {
+        return 'https://www.youtube-nocookie.com/embed/' + url.pathname.slice(1) + '?autoplay=1';
+      }
+      if (host === 'youtube.com' || host === 'm.youtube.com') {
+        let id = url.searchParams.get('v');
+        if (!id && (url.pathname.startsWith('/shorts/') || url.pathname.startsWith('/embed/'))) {
+          id = url.pathname.split('/')[2];
+        }
+        if (id) return 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1';
+      }
+      if (host === 'vimeo.com') {
+        const id = url.pathname.split('/').filter(Boolean).pop();
+        if (id) return 'https://player.vimeo.com/video/' + id + '?autoplay=1';
+      }
+      if (host === 'dailymotion.com') {
+        const match = url.pathname.match(/\/video\/([^_/?]+)/);
+        if (match) return 'https://www.dailymotion.com/embed/video/' + match[1] + '?autoplay=1';
+      }
+
+      // Keep uncommon legacy providers in the modal when they permit framing.
+      return videoUrl;
+    } catch (error) {
+      return '';
+    }
+  }
+
+  function openVideo(card) {
+    const embedUrl = getEmbedUrl(card.dataset.videoUrl);
+    if (!embedUrl) return;
+    videoTrigger = card;
+    videoFrame.title = card.getAttribute('aria-label');
+    videoFrame.src = embedUrl;
+    videoModal.classList.add('is-open');
+    videoModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    videoClose.focus();
+  }
+
+  function closeVideo() {
+    if (!videoModal.classList.contains('is-open')) return;
+    videoModal.classList.remove('is-open');
+    videoModal.setAttribute('aria-hidden', 'true');
+    videoFrame.src = '';
+    document.body.style.overflow = '';
+    if (videoTrigger) videoTrigger.focus();
+  }
+
+  document.querySelectorAll('.member-card.has-video').forEach(card => {
+    card.addEventListener('click', function() { openVideo(card); });
+    card.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openVideo(card);
+      }
+    });
+  });
+
+  videoClose.addEventListener('click', closeVideo);
+  videoModal.addEventListener('click', function(event) {
+    if (event.target === videoModal) closeVideo();
+  });
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') closeVideo();
   });
 })();
 </script>

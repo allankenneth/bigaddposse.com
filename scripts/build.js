@@ -64,14 +64,14 @@ const yearSections = years.map(year => {
       : '';
 
     const videoHtml = member.video
-      ? `\n      <a href="${escapeHtml(member.video)}" target="_blank" rel="noopener" class="video-link" aria-label="Watch ${escapeHtml(member.name)} video"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>`
+      ? `\n      <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>`
       : '';
 
     const memorialHtml = member.deceased
       ? `\n      <span class="memorial-badge" aria-label="In memoriam" data-tooltip="In memoriam"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c-1 2-3 4-3 6.5 0 2.5 1.5 4.5 3 4.5s3-2 3-4.5C15 6 13 4 12 2z"/><rect x="11" y="13" width="2" height="9" rx="1"/></svg></span>`
       : '';
 
-    return `    <article class="member-card${member.video ? ' has-video' : ''}${member.deceased ? ' memorial' : ''}">
+    return `    <article class="member-card${member.video ? ' has-video' : ''}${member.deceased ? ' memorial' : ''}"${member.video ? ` data-video-url="${escapeHtml(member.video)}" tabindex="0" role="button" aria-label="Watch ${escapeHtml(member.name)} video"` : ''}>
       <img src="${escapeHtml(member.photo)}" alt="${escapeHtml(member.name)}" loading="lazy">${videoHtml}${memorialHtml}
       <div class="member-info">
         <h3 class="member-name">${escapeHtml(member.name)}</h3>${nicknameHtml}
@@ -495,6 +495,12 @@ input:focus-visible {
 
 .member-card.has-video {
   position: relative;
+  cursor: pointer;
+}
+
+.member-card.has-video:focus-visible {
+  outline: 3px solid var(--accent-light);
+  outline-offset: 4px;
 }
 
 .member-card:hover {
@@ -556,6 +562,62 @@ input:focus-visible {
   height: 16px;
   fill: #000;
   margin-left: 2px;
+}
+
+/* Video modal */
+.video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 3rem);
+  background: rgba(4, 5, 12, 0.88);
+  backdrop-filter: blur(8px);
+}
+
+.video-modal.is-open {
+  display: flex;
+}
+
+.video-modal-content {
+  position: relative;
+  width: min(100%, 1100px);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid rgba(102, 229, 255, 0.35);
+  border-radius: 16px;
+  background: #000;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
+}
+
+.video-modal iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.video-modal-close {
+  position: absolute;
+  z-index: 1;
+  top: 0.65rem;
+  right: 0.65rem;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.75);
+  font: 400 2rem/1 sans-serif;
+  cursor: pointer;
+}
+
+.video-modal-close:hover,
+.video-modal-close:focus-visible {
+  color: #000;
+  background: var(--accent-light);
+  outline: none;
 }
 
 /* Memorial badge */
@@ -689,6 +751,13 @@ ${yearSections}
 
 </main>
 
+<div class="video-modal" id="video-modal" role="dialog" aria-modal="true" aria-label="Video player" aria-hidden="true">
+  <div class="video-modal-content">
+    <button type="button" class="video-modal-close" id="video-modal-close" aria-label="Close video">&times;</button>
+    <iframe id="video-frame" title="Member video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+  </div>
+</div>
+
 <script>
 (function() {
   // Scrollspy for timeline navigation
@@ -798,6 +867,7 @@ ${yearSections}
   const sortAsc = document.getElementById('sort-asc');
   const sortDesc = document.getElementById('sort-desc');
   const main = document.getElementById('members');
+  let newestFirst = false;
 
   function reverseOrder() {
     // Reverse year sections in the DOM
@@ -809,20 +879,114 @@ ${yearSections}
     linksArray.reverse().forEach(link => navInner.appendChild(link));
   }
 
-  sortAsc.addEventListener('click', function() {
-    if (this.getAttribute('aria-pressed') === 'true') return;
-    this.setAttribute('aria-pressed', 'true');
-    sortDesc.setAttribute('aria-pressed', 'false');
-    reverseOrder();
+  function setSortOrder(useNewestFirst, updateUrl) {
+    if (newestFirst !== useNewestFirst) {
+      reverseOrder();
+      newestFirst = useNewestFirst;
+    }
+
+    sortAsc.setAttribute('aria-pressed', String(!newestFirst));
+    sortDesc.setAttribute('aria-pressed', String(newestFirst));
+
+    if (updateUrl) {
+      history.replaceState(null, '', newestFirst ? '#newbies' : '#originators');
+    }
     updateActiveYear();
+  }
+
+  sortAsc.addEventListener('click', function() {
+    setSortOrder(false, true);
   });
 
   sortDesc.addEventListener('click', function() {
-    if (this.getAttribute('aria-pressed') === 'true') return;
-    this.setAttribute('aria-pressed', 'true');
-    sortAsc.setAttribute('aria-pressed', 'false');
-    reverseOrder();
-    updateActiveYear();
+    setSortOrder(true, true);
+  });
+
+  if (window.location.hash === '#newbies') {
+    setSortOrder(true, false);
+  } else if (window.location.hash === '#originators') {
+    setSortOrder(false, false);
+  }
+
+  window.addEventListener('hashchange', function() {
+    if (window.location.hash === '#newbies') setSortOrder(true, false);
+    if (window.location.hash === '#originators') setSortOrder(false, false);
+  });
+
+  // Play member videos in an in-page modal.
+  const videoModal = document.getElementById('video-modal');
+  const videoFrame = document.getElementById('video-frame');
+  const videoClose = document.getElementById('video-modal-close');
+  let videoTrigger = null;
+
+  function getEmbedUrl(videoUrl) {
+    try {
+      const url = new URL(videoUrl);
+      const host = url.hostname.replace(/^www\\./, '');
+
+      if (host === 'youtu.be') {
+        return 'https://www.youtube-nocookie.com/embed/' + url.pathname.slice(1) + '?autoplay=1';
+      }
+      if (host === 'youtube.com' || host === 'm.youtube.com') {
+        let id = url.searchParams.get('v');
+        if (!id && (url.pathname.startsWith('/shorts/') || url.pathname.startsWith('/embed/'))) {
+          id = url.pathname.split('/')[2];
+        }
+        if (id) return 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1';
+      }
+      if (host === 'vimeo.com') {
+        const id = url.pathname.split('/').filter(Boolean).pop();
+        if (id) return 'https://player.vimeo.com/video/' + id + '?autoplay=1';
+      }
+      if (host === 'dailymotion.com') {
+        const match = url.pathname.match(/\\/video\\/([^_/?]+)/);
+        if (match) return 'https://www.dailymotion.com/embed/video/' + match[1] + '?autoplay=1';
+      }
+
+      // Keep uncommon legacy providers in the modal when they permit framing.
+      return videoUrl;
+    } catch (error) {
+      return '';
+    }
+  }
+
+  function openVideo(card) {
+    const embedUrl = getEmbedUrl(card.dataset.videoUrl);
+    if (!embedUrl) return;
+    videoTrigger = card;
+    videoFrame.title = card.getAttribute('aria-label');
+    videoFrame.src = embedUrl;
+    videoModal.classList.add('is-open');
+    videoModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    videoClose.focus();
+  }
+
+  function closeVideo() {
+    if (!videoModal.classList.contains('is-open')) return;
+    videoModal.classList.remove('is-open');
+    videoModal.setAttribute('aria-hidden', 'true');
+    videoFrame.src = '';
+    document.body.style.overflow = '';
+    if (videoTrigger) videoTrigger.focus();
+  }
+
+  document.querySelectorAll('.member-card.has-video').forEach(card => {
+    card.addEventListener('click', function() { openVideo(card); });
+    card.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openVideo(card);
+      }
+    });
+  });
+
+  videoClose.addEventListener('click', closeVideo);
+  videoModal.addEventListener('click', function(event) {
+    if (event.target === videoModal) closeVideo();
+  });
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') closeVideo();
   });
 })();
 </script>
