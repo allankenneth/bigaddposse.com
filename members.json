@@ -595,5 +595,12 @@
     "year": 2026,
     "photo": "img/derek-littlefield.jpg",
     "video": "https://www.youtube.com/watch?v=D4ElFXDbSi0"
+  },
+  {
+    "name": "Test Shredder",
+    "nickname": "Shredicon",
+    "year": 2026,
+    "photo": "img/new-member-f564b364b804a586133e24c22c9c72b5.jpg",
+    "video": "https://vimeo.com/153842457"
   }
 ]
