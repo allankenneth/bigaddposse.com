@@ -595,5 +595,12 @@
     "year": 2026,
     "photo": "img/derek-littlefield.jpg",
     "video": "https://www.youtube.com/watch?v=D4ElFXDbSi0"
+  },
+  {
+    "name": "Setup Test — Do Not Merge",
+    "nickname": "Integration Test",
+    "year": 2026,
+    "photo": "img/new-member-5ac290519cd32cab65fd9df0e4b26be1.jpg",
+    "video": "https://example.com/test.mp4"
   }
 ]
