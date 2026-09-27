@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "bap-video-corrections",
+  "main": "index.mjs",
+  "compatibility_date": "2026-09-27",
+  "workers_dev": true,
+  "vars": {
+    "GITHUB_OWNER": "allankenneth",
+    "GITHUB_REPO": "bigaddposse.com",
+    "GITHUB_BRANCH": "main",
+    "ALLOWED_ORIGINS": "https://bigaddposse.com,https://www.bigaddposse.com",
+    "SUBMISSIONS_ENABLED": "true"
+  },
+  "ratelimits": [
+    { "name": "SUBMISSION_LIMIT", "namespace_id": "1001", "simple": { "limit": 3, "period": 60 } },
+    { "name": "TOTAL_LIMIT", "namespace_id": "1002", "simple": { "limit": 15, "period": 60 } }
+  ]
+}

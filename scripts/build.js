@@ -71,7 +71,7 @@ const yearSections = years.map(year => {
       ? `\n      <span class="memorial-badge" aria-label="In memoriam" data-tooltip="In memoriam"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c-1 2-3 4-3 6.5 0 2.5 1.5 4.5 3 4.5s3-2 3-4.5C15 6 13 4 12 2z"/><rect x="11" y="13" width="2" height="9" rx="1"/></svg></span>`
       : '';
 
-    return `    <article class="member-card${member.video ? ' has-video' : ''}${member.deceased ? ' memorial' : ''}"${member.video ? ` data-video-url="${escapeHtml(member.video)}" tabindex="0" role="button" aria-label="Watch ${escapeHtml(member.name)} video"` : ''}>
+    return `    <article class="member-card${member.video ? ' has-video' : ''}${member.deceased ? ' memorial' : ''}"${member.video ? ` data-member-year="${member.year}" data-video-url="${escapeHtml(member.video)}" tabindex="0" role="button" aria-label="Watch ${escapeHtml(member.name)} video"` : ''}>
       <img src="${escapeHtml(member.photo)}" alt="${escapeHtml(member.name)}" loading="lazy">${videoHtml}${memorialHtml}
       <div class="member-info">
         <h3 class="member-name">${escapeHtml(member.name)}</h3>${nicknameHtml}
@@ -584,8 +584,8 @@ input:focus-visible {
 .video-modal-content {
   position: relative;
   width: min(100%, 1100px);
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
+  max-height: 90dvh;
+  overflow: auto;
   border: 1px solid rgba(102, 229, 255, 0.35);
   border-radius: 16px;
   background: #000;
@@ -593,8 +593,9 @@ input:focus-visible {
 }
 
 .video-modal iframe {
+  display: block;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 16 / 9;
   border: 0;
 }
 
@@ -619,6 +620,20 @@ input:focus-visible {
   background: var(--accent-light);
   outline: none;
 }
+
+.video-correction { padding: 1rem; background: var(--bg-card); }
+.video-correction summary { color: var(--accent); cursor: pointer; }
+.video-correction form { display: grid; gap: 0.75rem; padding-top: 1rem; }
+.video-correction input, .video-correction textarea {
+  width: 100%; padding: 0.65rem; font: inherit; color: var(--text);
+  background: var(--bg-dark); border: 1px solid var(--text-muted); border-radius: 4px;
+}
+.video-correction button { font: inherit; cursor: pointer; border: 0; margin: 0; }
+.video-correction button:disabled { opacity: 0.6; cursor: wait; }
+.video-correction p { font-size: 0.9rem; }
+.video-correction .honeypot { position: absolute; left: -10000px; }
+.video-correction a { text-decoration: underline; }
+.video-correction [hidden] { display: none; }
 
 /* Memorial badge */
 .memorial-badge {
@@ -755,9 +770,24 @@ ${yearSections}
   <div class="video-modal-content">
     <button type="button" class="video-modal-close" id="video-modal-close" aria-label="Close video">&times;</button>
     <iframe id="video-frame" title="Member video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+    <details class="video-correction" id="video-correction">
+      <summary>Is this the wrong video?</summary>
+      <form id="correction-form">
+        <p>Suggest a replacement for <strong id="correction-player"></strong>.</p>
+        <label>YouTube link<input id="correction-video" type="url" required maxlength="500" placeholder="https://www.youtube.com/watch?v=…"></label>
+        <label>Why is this a better video? (optional)<textarea id="correction-note" maxlength="500" rows="2"></textarea></label>
+        <label class="honeypot" aria-hidden="true">Website<input id="correction-website" tabindex="-1" autocomplete="off"></label>
+        <p>No account needed. Suggestions and explanations appear publicly on GitHub for review.</p>
+        <button class="btn" id="correction-submit" type="submit">Submit suggestion</button>
+        <a id="correction-email" href="mailto:hi@allankenneth.com">Send by email</a>
+        <p id="correction-status" role="status" aria-live="polite"></p>
+      </form>
+    </details>
   </div>
 </div>
 
+<script src="assets/corrections-config.js"></script>
+<script type="module" src="assets/corrections.mjs"></script>
 <script>
 (function() {
   // Scrollspy for timeline navigation
@@ -954,6 +984,7 @@ ${yearSections}
     const embedUrl = getEmbedUrl(card.dataset.videoUrl);
     if (!embedUrl) return;
     videoTrigger = card;
+    videoModal.dispatchEvent(new CustomEvent('playerchange', { detail: card }));
     videoFrame.title = card.getAttribute('aria-label');
     videoFrame.src = embedUrl;
     videoModal.classList.add('is-open');
@@ -967,6 +998,7 @@ ${yearSections}
     videoModal.classList.remove('is-open');
     videoModal.setAttribute('aria-hidden', 'true');
     videoFrame.src = '';
+    videoModal.dispatchEvent(new Event('playerclose'));
     document.body.style.overflow = '';
     if (videoTrigger) videoTrigger.focus();
   }

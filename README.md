@@ -23,7 +23,7 @@ If you're comfortable with GitHub, you can submit changes directly:
 
 ## How the Site Works
 
-The site is built automatically from `members.json`. When changes are pushed to this file, a GitHub Action rebuilds `index.html`.
+The site is built automatically from `members.json`. When changes are pushed to this file, a GitHub Action rebuilds `index.html` and deploys the public files to GitHub Pages.
 
 ### members.json Structure
 
@@ -68,3 +68,7 @@ node scripts/build.js
 ```
 
 This generates `index.html` from `members.json`.
+
+## Anonymous video corrections
+
+Video modals include a replacement-video form with an email fallback. See [Worker setup](worker/README.md) for deployment, GitHub credentials, abuse controls, and optional CAPTCHA support.

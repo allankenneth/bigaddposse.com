@@ -1,36 +1,48 @@
-name: Build index.html from members.json
+name: Build and deploy GitHub Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
     paths:
       - 'members.json'
+      - 'scripts/build.js'
+      - 'assets/**'
+      - 'img/**'
+      - 'tale-of-bap.html'
+      - 'CNAME'
+      - '.github/workflows/build.yml'
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-
-      - name: Build index.html
-        run: node scripts/build.js
-
-      - name: Commit and push if changed
+          node-version: '22'
+      - run: node --test worker/test.mjs
+      - run: node scripts/build.js
+      - uses: actions/configure-pages@v5
+      - name: Stage public files
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add index.html
-          git diff --staged --quiet || git commit -m "Rebuild index.html from members.json"
-          git push
+          mkdir _site
+          cp index.html tale-of-bap.html CNAME _site/
+          cp -R img assets _site/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - uses: actions/deploy-pages@v4
+        id: deployment
