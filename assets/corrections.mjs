@@ -1,4 +1,4 @@
-import { normalizeYouTube } from './youtube.mjs';
+import { normalizeVideoUrl } from './video-url.mjs';
 const modal = document.getElementById('video-modal');
 const details = document.getElementById('video-correction');
 const form = document.getElementById('correction-form');
@@ -11,7 +11,7 @@ const endpoint = window.BAP_CORRECTIONS_ENDPOINT;
 let player;
 let controller;
 function updateEmail() {
-  const body = 'Update ' + player.name + ' (' + player.year + ') video to ' + (normalizeYouTube(video.value) || video.value || '[paste YouTube link here]') + '\n\nCurrent video: ' + player.current + '\n\n' + note.value;
+  const body = 'Update ' + player.name + ' (' + player.year + ') video to ' + (normalizeVideoUrl(video.value) || video.value || '[paste video link here]') + '\n\nCurrent video: ' + player.current + '\n\n' + note.value;
   email.href = 'mailto:hi@allankenneth.com?subject=' + encodeURIComponent('BAP Video Update: ' + player.name) + '&body=' + encodeURIComponent(body);
 }
 modal.addEventListener('playerchange', event => {
@@ -30,8 +30,8 @@ modal.addEventListener('playerclose', () => controller?.abort());
 form.addEventListener('input', () => { video.setCustomValidity(''); updateEmail(); });
 form.addEventListener('submit', async event => {
   event.preventDefault();
-  const normalized = normalizeYouTube(video.value);
-  video.setCustomValidity(normalized ? '' : 'Please enter a valid YouTube video link.');
+  const normalized = normalizeVideoUrl(video.value);
+  video.setCustomValidity(normalized ? '' : 'Please enter a valid HTTP or HTTPS video link.');
   if (!form.reportValidity() || !endpoint) return;
   controller?.abort();
   const requestController = new AbortController();
@@ -67,7 +67,7 @@ form.addEventListener('submit', async event => {
 // Keep keyboard focus within the open dialog, including the new form controls.
 modal.addEventListener('keydown', event => {
   if (event.key !== 'Tab') return;
-  const focusable = [...modal.querySelectorAll('button, iframe, summary, input, textarea, a[href]')].filter(el => !el.disabled && el.tabIndex >= 0 && el.getClientRects().length);
+  const focusable = [...modal.querySelectorAll('button, iframe, video, summary, input, textarea, a[href]')].filter(el => !el.disabled && el.tabIndex >= 0 && el.getClientRects().length);
   const first = focusable[0], last = focusable.at(-1);
   if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
   else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }

@@ -45,7 +45,7 @@ Each member entry looks like this:
 | `nickname` | No | BAP nickname (displayed in uppercase) |
 | `year` | Yes | Year inducted into BAP |
 | `photo` | Yes | Path to photo in `img/` folder |
-| `video` | No | YouTube or Vimeo link to a shred video |
+| `video` | No | HTTP or HTTPS link to a shred video |
 
 ### Adding a New Member
 
@@ -57,7 +57,7 @@ Each member entry looks like this:
 
 ### Updating a Video Link
 
-Find the member in `members.json` and add or update the `video` field with a YouTube or Vimeo URL.
+Find the member in `members.json` and add or update the `video` field with a video URL (any provider or a self-hosted file).
 
 ## Local Development
 

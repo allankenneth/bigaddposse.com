@@ -502,12 +502,16 @@ input:focus-visible {
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
 }
 
-.video-modal iframe {
+.video-modal iframe,
+.video-modal video {
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
   border: 0;
 }
+
+.video-modal [hidden] { display: none; }
+.video-original-link { display: block; padding: 0.75rem 1rem; background: var(--bg-card); }
 
 .video-modal-close {
   position: absolute;
@@ -995,7 +999,7 @@ input:focus-visible {
 <section class="year-section" id="y2001">
   <header class="year-header"><h2 class="year-title">2001</h2></header>
   <div class="members-grid">
-    <article class="member-card has-video" data-member-year="2001" data-video-url="https://vimeo.com/158856059" tabindex="0" role="button" aria-label="Watch Allan Haggett video">
+    <article class="member-card has-video" data-member-year="2001" data-video-url="https://www.youtube.com/watch?v=33Em7fpv6uI" tabindex="0" role="button" aria-label="Watch Allan Haggett video">
       <img src="img/allan-haggett-5ft-superfly-worlds-2001.jpg" alt="Allan Haggett" loading="lazy">
       <span class="video-link" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       <div class="member-info">
@@ -1547,11 +1551,14 @@ input:focus-visible {
   <div class="video-modal-content">
     <button type="button" class="video-modal-close" id="video-modal-close" aria-label="Close video">&times;</button>
     <iframe id="video-frame" title="Member video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+    <video id="video-file" controls playsinline preload="metadata" tabindex="0" hidden></video>
+    <a class="video-original-link" id="video-original" target="_blank" rel="noopener noreferrer">Open video in a new tab</a>
     <details class="video-correction" id="video-correction">
       <summary>Is this the wrong video?</summary>
       <form id="correction-form">
         <p>Suggest a replacement for <strong id="correction-player"></strong>.</p>
-        <label>YouTube link<input id="correction-video" type="url" required maxlength="500" placeholder="https://www.youtube.com/watch?v=…"></label>
+        <label>Video link<input id="correction-video" type="url" required maxlength="2048" placeholder="https://…" aria-describedby="correction-video-help"></label>
+        <p id="correction-video-help">YouTube, Vimeo, self-hosted videos, or any other video website.</p>
         <label>Why is this a better video? (optional)<textarea id="correction-note" maxlength="500" rows="2"></textarea></label>
         <label class="honeypot" aria-hidden="true">Website<input id="correction-website" tabindex="-1" autocomplete="off"></label>
         <p>No account needed. Suggestions and explanations appear publicly on GitHub for review.</p>
@@ -1565,7 +1572,8 @@ input:focus-visible {
 
 <script src="assets/corrections-config.js"></script>
 <script type="module" src="assets/corrections.mjs"></script>
-<script>
+<script type="module">
+import { normalizeVideoUrl, isDirectVideo } from './assets/video-url.mjs';
 (function() {
   // Scrollspy for timeline navigation
   const nav = document.getElementById('timeline-nav');
@@ -1723,6 +1731,8 @@ input:focus-visible {
   // Play member videos in an in-page modal.
   const videoModal = document.getElementById('video-modal');
   const videoFrame = document.getElementById('video-frame');
+  const videoFile = document.getElementById('video-file');
+  const videoOriginal = document.getElementById('video-original');
   const videoClose = document.getElementById('video-modal-close');
   let videoTrigger = null;
 
@@ -1758,12 +1768,24 @@ input:focus-visible {
   }
 
   function openVideo(card) {
-    const embedUrl = getEmbedUrl(card.dataset.videoUrl);
-    if (!embedUrl) return;
+    const videoUrl = normalizeVideoUrl(card.dataset.videoUrl);
+    if (!videoUrl) return;
+    const direct = isDirectVideo(videoUrl);
+    const embedUrl = direct ? '' : getEmbedUrl(videoUrl);
     videoTrigger = card;
     videoModal.dispatchEvent(new CustomEvent('playerchange', { detail: card }));
     videoFrame.title = card.getAttribute('aria-label');
-    videoFrame.src = embedUrl;
+    videoOriginal.href = videoUrl;
+    videoFrame.hidden = direct;
+    videoFile.hidden = !direct;
+    videoFile.setAttribute('aria-label', card.getAttribute('aria-label'));
+    if (direct) {
+      videoFrame.removeAttribute('src');
+      videoFile.src = videoUrl;
+      videoFile.play().catch(() => {});
+    } else {
+      videoFrame.src = embedUrl;
+    }
     videoModal.classList.add('is-open');
     videoModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -1774,7 +1796,10 @@ input:focus-visible {
     if (!videoModal.classList.contains('is-open')) return;
     videoModal.classList.remove('is-open');
     videoModal.setAttribute('aria-hidden', 'true');
-    videoFrame.src = '';
+    videoFrame.removeAttribute('src');
+    videoFile.pause();
+    videoFile.removeAttribute('src');
+    videoFile.load();
     videoModal.dispatchEvent(new Event('playerclose'));
     document.body.style.overflow = '';
     if (videoTrigger) videoTrigger.focus();

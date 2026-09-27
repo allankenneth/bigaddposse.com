@@ -1,4 +1,4 @@
-import { normalizeYouTube } from '../assets/youtube.mjs';
+import { normalizeVideoUrl } from '../assets/video-url.mjs';
 
 class RequestError extends Error {
   constructor(status, message) { super(message); this.status = status; }
@@ -25,7 +25,7 @@ async function readInput(request) {
     const { value, done } = await reader.read();
     if (done) break;
     size += value.length;
-    if (size > 4096) { await reader.cancel(); throw new RequestError(413, 'Submission is too long.'); }
+    if (size > 8192) { await reader.cancel(); throw new RequestError(413, 'Submission is too long.'); }
     chunks.push(value);
   }
   const bytes = new Uint8Array(size);
@@ -35,8 +35,8 @@ async function readInput(request) {
   try { data = JSON.parse(new TextDecoder().decode(bytes)); } catch { throw new RequestError(400, 'Invalid form data.'); }
   if (!data || typeof data !== 'object' || Array.isArray(data)) throw new RequestError(400, 'Invalid form data.');
   if (data.website) throw new RequestError(400, 'Unable to accept this submission.');
-  const video = typeof data.video === 'string' && normalizeYouTube(data.video);
-  if (!video) throw new RequestError(400, 'Enter a valid YouTube video link.');
+  const video = typeof data.video === 'string' && normalizeVideoUrl(data.video);
+  if (!video) throw new RequestError(400, 'Enter a valid HTTP or HTTPS video link.');
   if (typeof data.name !== 'string' || data.name.length > 150 || !Number.isInteger(data.year)) throw new RequestError(400, 'Invalid player.');
   if (data.note !== undefined && (typeof data.note !== 'string' || data.note.length > 500)) throw new RequestError(400, 'Keep the explanation under 500 characters.');
   return { name: data.name, year: data.year, video, note: data.note || '' };
@@ -74,7 +74,7 @@ export async function createCorrection(data, env, fetcher = fetch) {
   const matches = members.filter(member => member.name === data.name && member.year === data.year);
   if (matches.length !== 1) throw new RequestError(400, 'Player not found. Refresh the page and try again.');
   const member = matches[0];
-  if (normalizeYouTube(member.video) === data.video) throw new RequestError(409, 'That video is already assigned to this player.');
+  if (normalizeVideoUrl(member.video) === data.video) throw new RequestError(409, 'That video is already assigned to this player.');
   const previous = member.video;
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(JSON.stringify([data.name, data.year, previous, data.video])));
   const hash = Array.from(new Uint8Array(digest), b => b.toString(16).padStart(2, '0')).join('');

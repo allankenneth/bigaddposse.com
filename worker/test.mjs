@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import worker, { createCorrection } from './index.mjs';
 import { normalizeYouTube } from '../assets/youtube.mjs';
+import { normalizeVideoUrl, isDirectVideo } from '../assets/video-url.mjs';
 
 const input = { name: 'Allan Haggett', year: 1997, video: 'https://www.youtube.com/watch?v=abcdefghijk', note: 'Better clip @someone <script>' };
 const env = {
@@ -20,9 +21,9 @@ test('YouTube normalization accepts known formats and rejects malicious/invalid 
 
 test('rejects invalid origin, invalid data, oversized body, disabled submissions and rate limits before GitHub', async () => {
   assert.equal((await worker.fetch(request(input, { headers: { Origin: 'https://evil.test' } }), env)).status, 403);
-  assert.equal((await worker.fetch(request({ ...input, video: 'https://evil.test' }), env)).status, 400);
+  assert.equal((await worker.fetch(request({ ...input, video: 'javascript:alert(1)' }), env)).status, 400);
   assert.equal((await worker.fetch(request({ ...input, website: 'bot' }), env)).status, 400);
-  assert.equal((await worker.fetch(request({ ...input, note: 'x'.repeat(5000) }), env)).status, 413);
+  assert.equal((await worker.fetch(request({ ...input, note: 'x'.repeat(9000) }), env)).status, 413);
   assert.equal((await worker.fetch(request(), { ...env, SUBMISSIONS_ENABLED: 'false' })).status, 503);
   const limited = await worker.fetch(request(), { ...env, SUBMISSION_LIMIT: { limit: async () => ({ success: false }) } });
   assert.equal(limited.status, 429);
@@ -80,4 +81,32 @@ test('unknown players and unchanged videos never write; upstream failure is not 
   await assert.rejects(createCorrection({ ...input, video: 'https://www.youtube.com/watch?v=01234567890' }, env, mock.fetcher), /already assigned/);
   assert.equal(mock.writes.length, 0);
   await assert.rejects(createCorrection(input, env, mockGithub({ failPR: true }).fetcher), /GitHub request failed/);
+});
+
+
+test('accepts arbitrary providers and preserves self-hosted URL parameters', () => {
+  for (const link of [
+    'https://vimeo.com/158856059',
+    'https://videos.example.org/shred.mp4?signature=abc%2B123&expires=999#t=15',
+    'http://media.example.org:8080/download?id=42',
+    'https://archive.org/details/footbag',
+    'https://example.com/clip.MOV'
+  ]) assert.equal(normalizeVideoUrl(link), link);
+  assert.equal(normalizeVideoUrl('  https://youtu.be/abcdefghijk  '), input.video);
+  for (const link of ['javascript:alert(1)', 'data:video/mp4;base64,abcd', 'file:///tmp/video.mp4', '//example.com/video', 'not a link', 'https://user:password@example.com/video', 'https://example.com/\nvideo', 'https://example.com/' + 'a'.repeat(2048)]) assert.equal(normalizeVideoUrl(link), null);
+});
+
+test('recognizes direct video files independently of query strings and fragments', () => {
+  for (const link of ['https://example.com/clip.mp4?download=1#t=2', 'https://example.com/clip.WEBM', 'https://example.com/clip.ogv', 'https://example.com/clip.mov']) assert.equal(isDirectVideo(link), true);
+  for (const link of ['https://example.com/watch?name=clip.mp4', 'https://example.com/clip.mp4/page', 'https://vimeo.com/158856059', 'invalid']) assert.equal(isDirectVideo(link), false);
+});
+
+test('PRs preserve non-YouTube video links exactly', async () => {
+  for (const video of ['https://vimeo.com/123456789', 'https://example.com/shred.mp4?signature=abc%2B123#t=10']) {
+    const mock = mockGithub();
+    await createCorrection({ ...input, video }, env, mock.fetcher);
+    const update = mock.writes.find(write => write.path.endsWith('/contents/members.json'));
+    const updated = JSON.parse(Buffer.from(update.body.content, 'base64').toString());
+    assert.deepEqual(updated, [{ ...members[0], video }, members[1]]);
+  }
 });

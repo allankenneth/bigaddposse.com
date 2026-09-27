@@ -21,7 +21,7 @@ Set repository **Settings → Pages → Build and deployment → Source** to **G
 ## Verify after connecting
 
 1. Open a player's video and expand “Is this the wrong video?”.
-2. Submit a different valid YouTube link. Confirm the returned PR changes only that player's video.
+2. Submit a different valid HTTP or HTTPS video link. Confirm the returned PR changes only that player's video.
 3. Submit the same correction again; it should link to the existing PR.
 4. Close the test PR without merging, and delete its test branch if desired.
 5. For a real correction, merge it and verify the Pages deployment and updated video.
@@ -35,7 +35,7 @@ npx wrangler@4 deploy --dry-run
 
 ## Abuse controls and optional CAPTCHA
 
-Initial controls: a honeypot, 4 KB request limit, strict YouTube URL validation, known player matching, three requests per IP per minute, fifteen total requests per minute per Cloudflare location, and deterministic branches to deduplicate suggestions. Cloudflare rate-limit counters are approximate and local to each Cloudflare location, not a strict global quota. Visitors sharing an IP share the limit. Origin checks restrict browsers but are not authentication and do not stop a scripted client.
+Initial controls: a honeypot, 8 KB request limit, HTTP/HTTPS URL validation (no embedded credentials), known player matching, three requests per IP per minute, fifteen total requests per minute per Cloudflare location, and deterministic branches to deduplicate suggestions. Cloudflare rate-limit counters are approximate and local to each Cloudflare location, not a strict global quota. Visitors sharing an IP share the limit. Origin checks restrict browsers but are not authentication and do not stop a scripted client.
 
 Turnstile is deliberately absent. To add it later, render a widget in the form, send its response token, and verify it in `checkSubmission()` before any GitHub calls. Another CAPTCHA provider can use the same integration point. This requires a small frontend/backend change, not a migration or database. Never trust a token without server-side verification.
 
@@ -44,3 +44,7 @@ For an immediate pause, change `SUBMISSIONS_ENABLED` to `false` in `wrangler.jso
 GitHub credentials remain inside Worker secret storage. No visitor email or name is collected. Suggestions and optional explanations are public in PRs; the form discloses this. IP addresses are used for rate limiting but are not included in PRs or application logs. URL validation verifies syntax/provider, not whether a video exists, embeds successfully, or depicts the right person: that is part of human review.
 
 A repeated suggestion links to an existing PR even if closed; it does not silently reopen a rejected request. GitHub API failures can leave a suggestion branch; retries recover an unchanged branch or reuse its existing commit. If its contents changed separately, a retry refuses to overwrite them.
+
+## Video providers
+
+Suggestions can link to any HTTP or HTTPS video URL. Known YouTube URLs are normalized for duplicate detection; other providers and self-hosted URLs preserve query strings and fragments. MP4, WebM, Ogg, M4V, and MOV file extensions select the native video player (codec support depends on the browser). Other URLs use the existing provider embeds or an iframe. An “Open video in a new tab” link is always available for sites that block embedding, unsupported formats, and extensionless file URLs. No submitted URL is fetched by the Worker.
