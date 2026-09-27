@@ -48,3 +48,31 @@ A repeated suggestion links to an existing PR even if closed; it does not silent
 ## Video providers
 
 Suggestions can link to any HTTP or HTTPS video URL. Known YouTube URLs are normalized for duplicate detection; other providers and self-hosted URLs preserve query strings and fragments. MP4, WebM, Ogg, M4V, and MOV file extensions select the native video player (codec support depends on the browser). Other URLs use the existing provider embeds or an iframe. An “Open video in a new tab” link is always available for sites that block embedding, unsupported formats, and extensionless file URLs. No submitted URL is fetched by the Worker.
+
+## Community new-member submissions
+
+The footer's **New BAP Inducted** button opens a code gate. `/members/unlock` validates the code on the Worker; `/members` validates it again before accepting a submission. Unlocking does not issue a persistent session, so revocation applies to already-open forms on their next submission. The code is held only in memory while the dialog is open, cleared on close/success, and never added to PRs, source files, URLs, browser storage, or application logs.
+
+Name and induction year are required. Nickname, photo, video, and a review note are optional. JPEG, PNG, and WebP uploads up to 10 MB are resized in the browser to a maximum of 1200 pixels and re-encoded as JPEG without original metadata. The Worker bounds the request, checks JPEG framing/dimensions, and stores the photo under a generated `img/new-member-….jpg` path. Without a photo it uses `img/profile.jpg`. A single Git commit includes the photo and member record, so a reviewer cannot merge a half-finished upload. Existing members retain their order; the new record is inserted into the appropriate year. Review the actual photo and member details before merging.
+
+Member codes are stored as SHA-256 hashes in the encrypted `MEMBER_SUBMITTER_CODE_HASHES` Worker secret. No production code or hash belongs in this repository. Five code attempts per IP per minute and thirty total attempts per Cloudflare location per minute are allowed. Normal submission rate limits also apply after code verification. These limits are approximate, as described above. A shared code grants submission access, not a verified identity; PR review remains the publication gate.
+
+### Replace active codes or revoke one
+
+From the repository root:
+
+```sh
+python3 worker/codes.py set
+```
+
+The hidden prompt accepts one code at a time. Enter **every code you want to keep active**, then press Enter at an empty prompt to finish. Any omitted code is revoked. This supports distributing separate codes to different groups and revoking one without revoking the others. The script sends only their hashes to the Worker secret through Wrangler and does not save the codes locally.
+
+### Revoke all codes immediately
+
+```sh
+python3 worker/codes.py revoke-all
+```
+
+This updates only the Worker secret. No site rebuild is needed; once Cloudflare propagates the update, all unlock and final submission attempts using revoked codes fail. Existing PRs remain available for review. Running `set` with a new code reopens submissions. Deleting the `MEMBER_SUBMITTER_CODE_HASHES` secret also disables new-member submissions; video corrections remain available.
+
+Member PRs are deduplicated by normalized full name and induction year. Existing roster names are rejected regardless of year. A duplicate submission returns its original PR rather than replacing an uploaded photo or member details. Closed submissions also return the original PR, so a rejected submission cannot silently reopen itself.

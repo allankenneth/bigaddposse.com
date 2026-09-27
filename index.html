@@ -612,6 +612,25 @@ input:focus-visible {
   display: none;
 }
 
+/* Community submissions */
+.site-footer { padding: 2.5rem 1rem; text-align: center; background: var(--bg-timeline); border-top: 1px solid rgba(102,229,255,.25); }
+.site-footer p { color: var(--text-muted); }
+.site-footer button { border: 0; font: inherit; cursor: pointer; }
+.member-dialog { margin: auto; width: min(92vw, 580px); max-height: 90dvh; overflow: auto; padding: 1.5rem; color: var(--text); background: var(--bg-card); border: 1px solid var(--accent); border-radius: 12px; }
+.member-dialog::backdrop { background: rgba(4,5,12,.88); backdrop-filter: blur(6px); }
+.member-dialog h2 { padding-right: 2rem; margin-bottom: .75rem; }
+.member-dialog p { margin-bottom: .75rem; color: var(--text-muted); }
+.member-dialog form { display: grid; gap: .8rem; }
+.member-dialog input, .member-dialog textarea { width: 100%; padding: .65rem; font: inherit; color: var(--text); background: var(--bg-dark); border: 1px solid var(--text-muted); border-radius: 4px; }
+.member-dialog button { font: inherit; cursor: pointer; border: 0; }
+.member-dialog button:disabled { opacity: .6; cursor: wait; }
+.member-dialog .dialog-close { float: right; background: transparent; color: var(--text); padding: .25rem; }
+.member-dialog .honeypot { position: absolute; left: -10000px; }
+.member-dialog [hidden] { display: none; }
+.member-dialog img { max-width: 160px; max-height: 160px; object-fit: contain; border-radius: 6px; }
+.member-dialog .member-status { color: var(--text); margin-top: 1rem; }
+.member-dialog a { text-decoration: underline; }
+
 /* Mobile */
 @media (max-width: 600px) {
   .members-grid {
@@ -1547,6 +1566,36 @@ input:focus-visible {
 
 </main>
 
+<footer class="site-footer">
+  <p>Help keep the BAP roster up to date.</p>
+  <button type="button" class="btn" id="new-member-open">New BAP Inducted</button>
+</footer>
+
+<dialog class="member-dialog" id="new-member-dialog" aria-labelledby="new-member-title">
+  <button type="button" class="dialog-close" id="new-member-close" aria-label="Close new member form">Close ×</button>
+  <h2 id="new-member-title">New BAP Inducted</h2>
+  <form id="member-code-form">
+    <p>Enter the submitter code shared with your community to add a newly inducted member.</p>
+    <label>Submitter code<input type="password" id="member-code" required maxlength="256" autocomplete="off" autocapitalize="none" spellcheck="false"></label>
+    <button type="submit" class="btn" id="member-unlock">Continue</button>
+  </form>
+  <form id="new-member-form" hidden>
+    <p>Tell us about the new member. Your submission will be reviewed before it appears on the site.</p>
+    <label>Full name<input id="member-name" required maxlength="150" autocomplete="off"></label>
+    <label>BAP nickname (optional)<input id="member-nickname" maxlength="100" autocomplete="off"></label>
+    <label>Induction year<input id="member-year" type="number" min="1992" required step="1" inputmode="numeric"></label>
+    <label>Photo (optional)<input id="member-photo" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="member-photo-help"></label>
+    <p id="member-photo-help">Choose a JPG, PNG, or WebP up to 10 MB. We’ll resize it for the roster. Without a photo, we’ll use a placeholder.</p>
+    <img id="member-photo-preview" alt="Selected member photo preview" hidden>
+    <label>Video link (optional)<input id="member-video" type="url" maxlength="2048" placeholder="https://…"></label>
+    <label>Note for review (optional)<textarea id="member-note" maxlength="1000" rows="3" placeholder="Where were they inducted? Anything else we should know?"></textarea></label>
+    <label class="honeypot" aria-hidden="true">Website<input id="member-website" tabindex="-1" autocomplete="off"></label>
+    <p>Member details, the photo, and your note will be public on GitHub. The submitter code stays private.</p>
+    <button type="submit" class="btn" id="member-submit">Submit new member</button>
+  </form>
+  <p class="member-status" id="member-status" role="status" aria-live="polite"></p>
+</dialog>
+
 <div class="video-modal" id="video-modal" role="dialog" aria-modal="true" aria-label="Video player" aria-hidden="true">
   <div class="video-modal-content">
     <button type="button" class="video-modal-close" id="video-modal-close" aria-label="Close video">&times;</button>
@@ -1572,6 +1621,7 @@ input:focus-visible {
 
 <script src="assets/corrections-config.js"></script>
 <script type="module" src="assets/corrections.mjs"></script>
+<script type="module" src="assets/new-members.mjs"></script>
 <script type="module">
 import { normalizeVideoUrl, isDirectVideo } from './assets/video-url.mjs';
 (function() {

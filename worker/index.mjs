@@ -1,8 +1,7 @@
 import { normalizeVideoUrl } from '../assets/video-url.mjs';
 
-class RequestError extends Error {
-  constructor(status, message) { super(message); this.status = status; }
-}
+import { RequestError, githubClient, decodeContent, encodeContent } from './common.mjs';
+import { verifyMemberCode, validateMember, createMember } from './members.mjs';
 
 // A CAPTCHA provider can be added here without changing the GitHub submission flow.
 async function checkSubmission(request, env) {
@@ -14,7 +13,7 @@ async function checkSubmission(request, env) {
   if (!perVisitor.success || !overall.success) throw new RequestError(429, 'Too many requests. Please wait a minute and try again.');
 }
 
-async function readInput(request) {
+async function readInput(request, maxBytes = 8192) {
   if (!request.headers.get('Content-Type')?.startsWith('application/json')) throw new RequestError(415, 'Use JSON.');
   // Bound the actual stream, including requests without Content-Length.
   const reader = request.body?.getReader();
@@ -25,7 +24,7 @@ async function readInput(request) {
     const { value, done } = await reader.read();
     if (done) break;
     size += value.length;
-    if (size > 8192) { await reader.cancel(); throw new RequestError(413, 'Submission is too long.'); }
+    if (size > maxBytes) { await reader.cancel(); throw new RequestError(413, 'Submission is too long.'); }
     chunks.push(value);
   }
   const bytes = new Uint8Array(size);
@@ -35,6 +34,10 @@ async function readInput(request) {
   try { data = JSON.parse(new TextDecoder().decode(bytes)); } catch { throw new RequestError(400, 'Invalid form data.'); }
   if (!data || typeof data !== 'object' || Array.isArray(data)) throw new RequestError(400, 'Invalid form data.');
   if (data.website) throw new RequestError(400, 'Unable to accept this submission.');
+  return data;
+}
+
+function validateCorrection(data) {
   const video = typeof data.video === 'string' && normalizeVideoUrl(data.video);
   if (!video) throw new RequestError(400, 'Enter a valid HTTP or HTTPS video link.');
   if (typeof data.name !== 'string' || data.name.length > 150 || !Number.isInteger(data.year)) throw new RequestError(400, 'Invalid player.');
@@ -42,29 +45,8 @@ async function readInput(request) {
   return { name: data.name, year: data.year, video, note: data.note || '' };
 }
 
-function decodeContent(content) {
-  return new TextDecoder().decode(Uint8Array.from(atob(content.replace(/\s/g, '')), c => c.charCodeAt(0)));
-}
-function encodeContent(content) {
-  return btoa(Array.from(new TextEncoder().encode(content), byte => String.fromCharCode(byte)).join(''));
-}
-
 export async function createCorrection(data, env, fetcher = fetch) {
-  const repo = `/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}`;
-  async function github(path, method = 'GET', body) {
-    const response = await fetcher('https://api.github.com' + repo + path, {
-      method,
-      headers: { Authorization: `Bearer ${env.GITHUB_TOKEN}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json', 'User-Agent': 'bap-video-corrections', 'X-GitHub-Api-Version': '2022-11-28' },
-      body: body === undefined ? undefined : JSON.stringify(body),
-      signal: AbortSignal.timeout(15000)
-    });
-    if (!response.ok) {
-      const error = new Error('GitHub request failed');
-      error.githubStatus = response.status;
-      throw error;
-    }
-    return response.status === 204 ? null : response.json();
-  }
+  const github = githubClient(env, fetcher);
   const base = env.GITHUB_BRANCH;
   const ref = await github('/git/ref/heads/' + encodeURIComponent(base));
   // Read at the exact commit the new branch will start from.
@@ -119,17 +101,26 @@ export default {
     const reply = (status, body) => new Response(JSON.stringify(body), { status, headers });
     if (!origin || !allowed.includes(origin)) return reply(403, { error: 'Origin not allowed.' });
     headers['Access-Control-Allow-Origin'] = origin;
-    if (new URL(request.url).pathname !== '/corrections') return reply(404, { error: 'Not found.' });
+    const route = new URL(request.url).pathname;
+    if (!['/corrections', '/members/unlock', '/members'].includes(route)) return reply(404, { error: 'Not found.' });
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: { ...headers, 'Access-Control-Allow-Methods': 'POST', 'Access-Control-Allow-Headers': 'Content-Type', 'Access-Control-Max-Age': '86400' } });
     if (request.method !== 'POST') return reply(405, { error: 'Use POST.' });
     try {
-      const data = await readInput(request);
+      const input = await readInput(request, route === '/members' ? 1100000 : 8192);
+      if (route !== '/corrections') {
+        await verifyMemberCode(input.code, request, env);
+        if (route === '/members/unlock') return reply(200, { unlocked: true });
+        const data = validateMember(input);
+        await checkSubmission(request, env);
+        return reply(200, await createMember(data, env));
+      }
+      const data = validateCorrection(input);
       await checkSubmission(request, env);
       return reply(200, await createCorrection(data, env));
     } catch (error) {
       if (error instanceof RequestError) return reply(error.status, { error: error.message });
       // Never log visitor data or credentials, or expose upstream error bodies.
-      console.error('Correction failed', error.githubStatus || 'internal');
+      console.error('Submission failed', error.githubStatus || 'internal');
       return reply(503, { error: 'Unable to submit right now. Please try again or use email.' });
     }
   }

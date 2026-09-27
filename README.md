@@ -72,3 +72,7 @@ This generates `index.html` from `members.json`.
 ## Anonymous video corrections
 
 Video modals include a replacement-video form with an email fallback. See [Worker setup](worker/README.md) for deployment, GitHub credentials, abuse controls, and optional CAPTCHA support.
+
+## New BAP inductees
+
+Use **New BAP Inducted** in the site footer with a community submitter code. The form collects member details and optionally a photo upload, and opens a PR for review. Merging adds the member to the published roster. See [code rotation and revocation](worker/README.md#community-new-member-submissions) for managing submitter access.
